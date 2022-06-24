@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: subscription
+  profiles:
+    active: dev
+    
+  cloud:
+    config:
+      uri: http://config:8888
+      name: subscription
