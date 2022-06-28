@@ -32,6 +32,9 @@ dependencyManagement {
 }
 
 dependencies {
+	// BflySoft Common API Load
+	implementation 'com.bfly:api-common:1.0.15'
+
 	// SpringBoot
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
@@ -41,6 +44,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.0'
+
+	// Spring Security
+	implementation 'org.springframework.security:spring-security-config'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 	// Cloud
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
@@ -53,7 +61,6 @@ dependencies {
 	implementation 'io.swagger:swagger-models:1.5.21'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-	implementation 'io.springfox:springfox-swagger2:3.0.0'
 
 	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
@@ -72,7 +79,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-
+	// PostgreSQL
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23' // 추가
+    runtimeOnly 'org.postgresql:postgresql' // 추가
 }
 
 tasks.named('test') {

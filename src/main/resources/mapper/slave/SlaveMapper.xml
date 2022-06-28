@@ -5,4 +5,12 @@
 
 <mapper namespace="com.bfly.subscription.mapper.slave.SlaveMapper">
 
+
+
+<select id="testQuery" resultType="String">
+
+    select version()
+
+</select>
+
 </mapper>

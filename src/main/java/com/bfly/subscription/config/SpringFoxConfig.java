@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +38,8 @@ public class SpringFoxConfig {
 	private String title;
 
 	@Bean
-	public Docket WigoMonitoringApiLocal_v_1_1() {
+	@Primary
+	public Docket CreateDocketSwaggerUI() {
 
 		List<Response> list = getGlobalResponse();
 
@@ -47,7 +49,8 @@ public class SpringFoxConfig {
 				.description(desc)
 				.build();
 
-		return new Docket(DocumentationType.OAS_30)
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName(title)
 				.securityContexts(Arrays.asList(securityContext()))
 				.securitySchemes(Arrays.asList(oauthClientCredentialsLocal()))
 				.apiInfo(apiinfo)
