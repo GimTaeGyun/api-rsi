@@ -14,4 +14,13 @@
         )
     </select>
 
+    <select id="setOptionCategory" parameterType="HashMap" resultType="HashMap">
+
+        call pm.sp_mgt_option_group(
+            #{jsonParameter}::json,
+            #{rc}::int2, 
+            #{rm}::VARCHAR
+        )
+    </select>
+
 </mapper>
