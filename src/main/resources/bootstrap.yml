@@ -4,10 +4,10 @@ spring:
   profiles:
       active: dev
   application:
-    name: subscription
+    name: management
   
   cloud:
     config:
       uri: http://config:8888
-      name: subscription
+      name: management
       label: dev # 가져올 Config의 Gitlab Branch Name
