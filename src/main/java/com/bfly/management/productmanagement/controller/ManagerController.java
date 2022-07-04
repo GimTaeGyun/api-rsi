@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.productmanagement.master.OptionCategoryUpdateReqModel;
+import com.bfly.management.model.productmanagement.master.OptionProductUpdateReqModel;
 import com.bfly.management.model.productmanagement.master.ProductUpdateReqModel;
 import com.bfly.management.model.productmanagement.slave.GetOptionCategoryReqModel;
 import com.bfly.management.model.productmanagement.slave.ProductItemReqModel;
@@ -76,6 +77,32 @@ public class ManagerController {
 	@PostMapping("/option/category/update")
 	public ApiResult<?> updateOption(@Valid @RequestBody OptionCategoryUpdateReqModel param) throws Exception {
 		return managerService.updateOptionCategory(param);
+	}
+
+	/**
+	 * 관리자 상품옵션 조회
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "상품옵션 조회", notes = "상품옵션 조회")
+	@PostMapping("/option/product/inquiry")
+	public ApiResult<?> getOptionProduct(@Valid @RequestBody GetOptionCategoryReqModel param) throws Exception {
+		return managerService.getOptionProduct(param);
+	}
+
+	/**
+	 * 관리자 상품옵션 생성 삭제 수정
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "상품옵션 생성, 수정, 삭제", notes = "상품옵션 생성, 수정, 삭제 ")
+	@PostMapping("/option/product/update")
+	public ApiResult<?> updateOptionProduct(@Valid @RequestBody OptionProductUpdateReqModel param) throws Exception {
+		return managerService.updateOptionProduct(param);
 	}
 
 }

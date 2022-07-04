@@ -10,6 +10,6 @@ import lombok.Setter;
 @ApiModel(description = "상품가져오기 REQ")
 public class ProductItemReqModel {
 
-	@ApiModelProperty(notes = "서비스ID", example = "1", required = true) 
+	@ApiModelProperty(notes = "Service ID", example = "1", required = true) 
 	private Integer sId;
 }

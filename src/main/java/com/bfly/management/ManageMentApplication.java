@@ -13,5 +13,4 @@ public class ManageMentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ManageMentApplication.class, args);
 	}
-
 }

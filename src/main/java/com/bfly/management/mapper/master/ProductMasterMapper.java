@@ -12,4 +12,6 @@ public interface ProductMasterMapper {
     public HashMap<String, Object> setProduct(HashMap<String, Object> parameter);
 
     public HashMap<String, Object> setOptionCategory(HashMap<String, Object> parameter);
+
+    public HashMap<String, Object> setOptionProduct(HashMap<String, Object> parameter);
 }

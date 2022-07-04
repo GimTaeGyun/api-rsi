@@ -33,7 +33,7 @@ dependencyManagement {
 
 dependencies {
 	// BflySoft Common API Load
-	implementation 'com.bfly:api-common:1.0.15'
+	// implementation 'com.bfly:api-common:1.0.15'
 
 	// SpringBoot
 	implementation 'org.springframework.boot:spring-boot-starter'

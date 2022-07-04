@@ -6,7 +6,7 @@
 <mapper namespace="com.bfly.management.mapper.slave.ProductSlaveMapper">
 
 <select id="testQuery" resultType="String">
-
+    <!-- DB 연동 테스트 쿼리 -->
     select version()
 
 </select>
@@ -26,6 +26,14 @@
     <!-- 옵션 카테고리 조회 -->
     SELECT 
         pm.fn_get_json_option_category(#{p_opt_cat_id}) AS result
+
+</select>
+
+
+<select id="getProductDetail" resultType="String" parameterType="Integer">
+    <!-- 상품 상세리스트 조회-->
+    SELECT 
+        pm.fn_get_json_product_detail(#{p_prd_id}) AS result
 
 </select>
 

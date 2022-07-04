@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.customermanagement.service.UserService;
 import com.bfly.management.model.common.ApiResult;
-import com.bfly.management.model.common.CommonCode;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
