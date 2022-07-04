@@ -9,4 +9,14 @@ import io.swagger.annotations.Api;
 @RequestMapping(value="/test")
 public class ProductBaseController {
 
+
+    @RequestMapping("/hello")
+    public String hello() {
+        return "Hello KeyCloak!";
+    }
+	
+    @RequestMapping("/app1")
+    public String tracingTest() {
+        return "This is permitAll!";
+    }
 }

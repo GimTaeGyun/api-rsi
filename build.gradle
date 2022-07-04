@@ -82,6 +82,10 @@ dependencies {
 	// PostgreSQL
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23' // 추가
     runtimeOnly 'org.postgresql:postgresql' // 추가
+
+	// KeyCloak
+	implementation 'org.keycloak:keycloak-spring-security-adapter:11.0.3'
+
 }
 
 tasks.named('test') {
