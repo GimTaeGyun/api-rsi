@@ -51,7 +51,12 @@ dependencies {
 
 
 	// Cloud
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
+        exclude group: 'com.sun.jersey'
+        exclude module: 'jsr311-api'
+    }
+
+
 	implementation 'org.springframework.cloud:spring-cloud-config-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
@@ -84,7 +89,9 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql' // 추가
 
 	// KeyCloak
+	implementation 'org.keycloak:keycloak-spring-boot-starter:17.0.1'
 	implementation 'org.keycloak:keycloak-spring-security-adapter:11.0.3'
+	implementation 'org.keycloak:keycloak-admin-client:17.0.1'
 
 }
 

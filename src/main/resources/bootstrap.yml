@@ -11,3 +11,14 @@ spring:
       uri: http://config:8888
       name: management
       label: dev # 가져올 Config의 Gitlab Branch Name
+
+keycloak:
+  enabled: true
+  realm: IntegratedManage
+  auth-server-url: http://192.168.10.198:8080/auth
+  ssl-required: external 
+  resource: ManageMentAPI
+  credentials:
+    secret: QIjYFnbEWeBRlGN7EDWH39xGrIk0jXar
+  use-resource-role-mappings: true
+  bearer-only: true
