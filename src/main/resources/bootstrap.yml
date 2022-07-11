@@ -11,23 +11,3 @@ spring:
       uri: http://config:8888
       name: management
       label: dev # 가져올 Config의 Gitlab Branch Name
-
-keycloak:
-  enabled: true
-  realm: ManageMentAPI
-  auth-server-url: http://192.168.10.198:8080/auth
-  ssl-required: external 
-  resource: ApplicationClient
-  credentials:
-    secret: C83UaObpMgTl66o8eaCbeuL9y7qHCvhr
-  use-resource-role-mappings: true
-  confidential-port: 0
-
-customvalues:
-  keycloak:
-    adminId : bflysoft
-    adminPw : Pa$$w0rd
-    tokenUrl : http://192.168.10.198:8080/auth/realms/%s/protocol/openid-connect/token
-    authUrl : http://192.168.10.198:8080/auth/realms/%s/protocol/openid-connect/auth
-
-    
