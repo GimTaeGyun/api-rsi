@@ -2,6 +2,7 @@
 pipeline {
     agent any
     tools {
+        gradle 'gradle'
         jdk 'Java11'
     }
     parameters {
@@ -13,7 +14,7 @@ pipeline {
         GITLAB_CREDENTIAL_ID = 'GitLab-User'
         GITLAB_PROJECT_NAME = 'ManageMentAPI'
         DEPLOY_FLAG = 'SUCCESS'
-        BUILD_CMD = 'gradlew clean build'
+        BUILD_CMD = './gradlew clean build'
         REMOTE_SERVER_A = 'ManageMentAPI_DEV'
         EXEC_CMD = 'sudo systemctl restart api-management.service'
         SOURCE_FILES = '**/*.jar' //SSH TRANSFER 전송할 파일
