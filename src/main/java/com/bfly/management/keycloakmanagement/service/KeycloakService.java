@@ -49,11 +49,14 @@ public class KeycloakService extends KeycloakBaseService{
     @Value("${customvalues.keycloak.tokenUrl}")
     private String tokenUrl;
 
+    @Value("${keycloak.auth-server-url}")
+    private String authServerUrl;
+
 
     public KeycloakCreateUserReqModel createUser(KeycloakCreateUserReqModel param) {
 
         Keycloak keycloak = new CustomKeycloak(
-                "http://192.168.10.198:8080/auth",   // 인증 URL
+                param.getAuthServerUrl(),   // 인증 URL
                 param.getRealm(),           // Realm 이름
                 param.getClientId(),        // Client ID
                 param.getClientSecret(),    // Client Credential

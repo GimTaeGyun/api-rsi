@@ -1,16 +1,10 @@
 package com.bfly.management.config;
 
-
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.keycloak.OAuth2Constants;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,24 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
-
-    // @Value("${keycloak.auth-server-url}")
-    // private String authServerUrl;
-  
-    // @Value("${keycloak.realm}")
-    // private String realm;
-  
-    // @Value("${keycloak.resource}")
-    // private String clientId;
-  
-    // @Value("${keycloak.credentials.secret}")
-    // private String clientSecret;
-
-    // @Value("${customvalues.keycloak.adminId}")
-    // private String adminId;
-
-    // @Value("${customvalues.keycloak.adminPw}")
-    // private String adminPw;
 
     ObjectMapper objectMapper = new ObjectMapper();
 

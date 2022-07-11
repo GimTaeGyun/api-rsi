@@ -131,6 +131,11 @@ public class UserController {
 		return userService.resetPassword(param);
 	}
 
+	/**
+	 * 패스워드 암호화
+	 * @param password
+	 * @return
+	 */
 	@ApiOperation(value = "패스워드 암호화", notes = "패스워드 암호화")
 	@PostMapping("/encrypt/password")
 	public ApiResult<?> passwordEncrypt(@RequestParam @NotBlank(message = "param값은 필수입니다.") String password){

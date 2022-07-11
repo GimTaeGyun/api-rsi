@@ -77,8 +77,8 @@ public class SpringFoxConfig {
 
 		return new Docket(DocumentationType.SWAGGER_2)
 				.groupName(title)
+				.securitySchemes(buildSecurityScheme())
 				.securityContexts(Arrays.asList(securityContext()))
-				.securitySchemes(Arrays.asList(oauthClientCredentialsLocal()))
 				.apiInfo(apiinfo)
 				.useDefaultResponseMessages(false)
 				.select()
@@ -106,8 +106,8 @@ public class SpringFoxConfig {
 
 		return new Docket(DocumentationType.SWAGGER_2)
 				.groupName(title)
+				.securitySchemes(buildSecurityScheme())
 				.securityContexts(Arrays.asList(securityContext()))
-				.securitySchemes(Arrays.asList(oauthClientCredentialsLocal()))
 				.apiInfo(apiinfo)
 				.useDefaultResponseMessages(false)
 				.select()
@@ -167,8 +167,8 @@ public class SpringFoxConfig {
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.keycloakmanagement.controller"))
 				.build()
-				.securitySchemes(buildSecurityScheme()).
-				securityContexts(Arrays.asList(securityContext()))
+				.securitySchemes(buildSecurityScheme())
+				.securityContexts(Arrays.asList(securityContext()))
 				.globalResponses(HttpMethod.GET, list)
 				.globalResponses(HttpMethod.PUT, list)
 				.globalResponses(HttpMethod.POST, list)
@@ -199,7 +199,6 @@ public class SpringFoxConfig {
                 new OAuthBuilder()
                         .name("spring_oauth")
                         .grantTypes(Arrays.asList(grantType))
-                        // .scopes(Arrays.asList(scopes()))
                         .build();
         return oauth;
 	}
@@ -223,9 +222,6 @@ public class SpringFoxConfig {
 	}
 
 	private AuthorizationScope[] scopes() {
-
-		
-
 		return new AuthorizationScope[] { 
 		};
 	}
