@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.bfly'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 configurations {
@@ -55,8 +55,6 @@ dependencies {
         exclude group: 'com.sun.jersey'
         exclude module: 'jsr311-api'
     }
-
-
 	implementation 'org.springframework.cloud:spring-cloud-config-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
