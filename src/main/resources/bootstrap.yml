@@ -14,11 +14,20 @@ spring:
 
 keycloak:
   enabled: true
-  realm: IntegratedManage
+  realm: ManageMentAPI
   auth-server-url: http://192.168.10.198:8080/auth
   ssl-required: external 
-  resource: ManageMentAPI
+  resource: ApplicationClient
   credentials:
-    secret: QIjYFnbEWeBRlGN7EDWH39xGrIk0jXar
+    secret: C83UaObpMgTl66o8eaCbeuL9y7qHCvhr
   use-resource-role-mappings: true
-  bearer-only: true
+  confidential-port: 0
+
+customvalues:
+  keycloak:
+    adminId : bflysoft
+    adminPw : Pa$$w0rd
+    tokenUrl : http://192.168.10.198:8080/auth/realms/%s/protocol/openid-connect/token
+    authUrl : http://192.168.10.198:8080/auth/realms/%s/protocol/openid-connect/auth
+
+    

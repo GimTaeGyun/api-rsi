@@ -1,12 +1,13 @@
-package com.bfly.management.productmanagement.controller;
+package com.bfly.management.keycloakmanagement.controller;
+
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import io.swagger.annotations.Api;
+
 @RestController
-@Api( tags = "테스트")
-@RequestMapping(value="/product")
-public class ProductBaseController {
+@Api( tags = "BASE")
+@RequestMapping(value="/keycloak")
+public class KeycloakBaseController {
+
 }

@@ -29,8 +29,6 @@ public class WebClientConfig {
 		ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
 				.codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1)).build();
 
-		// ClientHttpConnector connector = new
-		// ReactorClientHttpConnector(httpClient.keepAlive(false));
 		ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient);
 
 		return WebClient.builder().clientConnector(connector).exchangeStrategies(exchangeStrategies).build();

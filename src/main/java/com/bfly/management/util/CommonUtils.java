@@ -1,5 +1,11 @@
 package com.bfly.management.util;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,6 +15,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommonUtils {
+
+	public static String inputstreamToString(InputStream is) throws Exception{
+		StringBuilder textBuilder = new StringBuilder();
+        try (Reader reader = new BufferedReader(new InputStreamReader
+          (is, Charset.forName(StandardCharsets.UTF_8.name())))) {
+            int c = 0;
+            while ((c = reader.read()) != -1) {
+                textBuilder.append((char) c);
+            }
+        }
+
+		return textBuilder.toString();
+	}
+
 	public static String isValidPassword(String password) throws Exception {
 		
 		// 최소 8자, 최대 20자 상수 선언
