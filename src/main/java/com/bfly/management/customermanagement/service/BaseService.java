@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bfly.management.mapper.master.CustomerMasterMapper;
 import com.bfly.management.mapper.slave.CustomerSlaveMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -17,4 +18,8 @@ public class BaseService {
 
     @Autowired
     CustomerSlaveMapper slaveMapper;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
 }

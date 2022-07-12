@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ProductGroupModel {
     
-    @ApiModelProperty(notes = "상품그룹ID, 추가 경우 null, 수정/삭제시 대항 id") 
+    @ApiModelProperty(notes = "상품그룹ID, 추가 경우 null 수정/삭제시 대항 id", example = "0") 
     private Integer prdGrpId;
 
     @ApiModelProperty(notes = "서비스ID", example = "1", required = true) 

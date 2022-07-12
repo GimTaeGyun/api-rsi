@@ -7,10 +7,28 @@
 
 
 
-<select id="testQuery" resultType="String">
+    <select id="testQuery" resultType="String">
 
-    select version()
+        select version()
 
-</select>
+    </select>
+
+	<!-- 로그인정보 -->
+	<select id="selectLogin" parameterType="HashMap" resultType="HashMap">
+        call cu.sp_chk_login(
+            #{p_id}::VARCHAR,
+            #{p_rm}::VARCHAR, 
+            #{p_rc}::int2,
+            #{p_pw}::VARCHAR,
+            #{p_cust_id}::VARCHAR,
+            #{p_cust_nm}::VARCHAR
+        )
+	</select>
+
+	<!-- 고객정보 체크-->
+	<select id="checkCustomer" resultType="HashMap" parameterType="HashMap">
+        SELECT * FROM 
+            cu.fn_chk_cust_info(#{p_params}::json)
+	</select>
 
 </mapper>
