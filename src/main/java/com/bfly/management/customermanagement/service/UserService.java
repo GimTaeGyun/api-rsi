@@ -1,5 +1,6 @@
 package com.bfly.management.customermanagement.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bfly.management.model.common.ApiResult;
@@ -84,6 +85,13 @@ public class UserService extends BaseService {
         responseCode = CommonCode.COMMON_SUCCESS;
         
         return new ApiResult<String>(responseCode, result);
+    }
+
+    public ApiResult<?> passwordEncrypt(String param){
+        
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        return new ApiResult<>(CommonCode.COMMON_SUCCESS, passwordEncoder.encode(param));
     }
 
 }

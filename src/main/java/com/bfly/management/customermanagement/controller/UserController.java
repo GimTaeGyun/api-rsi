@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.bfly.management.model.common.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -127,5 +129,17 @@ public class UserController {
 	public ApiResult<?> resetPassword(HttpServletRequest request, @RequestParam @NotBlank(message = "param값은 필수입니다.") String param) throws Exception {
         log.info(param);
 		return userService.resetPassword(param);
+	}
+
+	/**
+	 * 패스워드 암호화
+	 * @param password
+	 * @return
+	 */
+	@ApiOperation(value = "패스워드 암호화", notes = "패스워드 암호화")
+	@PostMapping("/encrypt/password")
+	public ApiResult<?> passwordEncrypt(@RequestParam @NotBlank(message = "param값은 필수입니다.") String password){
+		log.info(password);
+		return userService.passwordEncrypt(password);
 	}
 }

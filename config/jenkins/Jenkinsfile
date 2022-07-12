@@ -1,0 +1,132 @@
+#!groovy
+pipeline {
+    agent any
+    tools {
+        gradle 'gradle'
+        jdk 'Java11'
+    }
+    parameters {
+		string(name: 'GIT_URL', defaultValue: 'http://192.168.10.45:20080/services/api.git', description: 'GIT_URL')
+        }
+
+    environment {
+        GIT_BUSINESS_CD = 'master'
+        GITLAB_CREDENTIAL_ID = 'GitLab-User'
+        GITLAB_PROJECT_NAME = 'ManageMentAPI'
+        DEPLOY_FLAG = 'SUCCESS'
+        BUILD_CMD = './gradlew clean build'
+        REMOTE_SERVER_A = 'ManageMentAPI_DEV'
+        EXEC_CMD = 'sudo systemctl restart api-management.service'
+        SOURCE_FILES = '**/*.jar' //SSH TRANSFER 전송할 파일
+        REMOVE_PREFIX = 'target/' //SSH TRANSFER 전송할 파일에서 삭제할 경로가 있다면 작성
+        REMOTE_DIRECTORY = '' //SSH TRANSFER 원격 서버 저장 경로(공백: default 경로)
+        CLEAR_CMD = 'rm -rf ./*'
+    }
+
+   stages {
+        stage('mattermost send start') {
+           steps {
+               script {
+                   mattermostSend (
+                            color: "#2A42EE", 
+                            message: "Deploy STARTED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                        )
+               }
+           }
+       }
+
+        stage('Checkout') {
+            steps {  
+                script {
+                    try {
+                        
+                        git(branch: "${env.GIT_BUSINESS_CD}", 
+                        credentialsId: "${env.GITLAB_CREDENTIAL_ID}", url: params.GIT_URL, changelog: false, poll: false)
+                        
+                    } catch(e) {
+                        env.DEPLOY_FLAG = "FAILURE"
+                    } finally {
+                        if(env.DEPLOY_FLAG == "FAILURE") {
+                            mattermostSend (
+                                color: "danger", 
+                                message: "Git Checkout FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                            )
+                        } else{
+                            mattermostSend (
+                                color: "good", 
+                                message: "Git Checkout SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage ('Build') {
+            steps {
+                sh  "${env.BUILD_CMD}"
+            }
+        }
+        
+        /*************** Pulish Over SSH Plug in사용******************/
+        stage('SSH transfer') {
+            steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                script {
+                    try {
+                        sshPublisher(
+                        continueOnError: false, failOnError: true,
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: "${env.REMOTE_SERVER_A}",//Jenkins 시스템 정보에 사전 입력한 서버 ID
+                                    verbose: true,
+                                    transfers: [
+                                        sshTransfer(
+                                            sourceFiles: "${env.SOURCE_FILES}", //전송할 파일
+                                            removePrefix: "${env.REMOVE_PREFIX}", //파일에서 삭제할 경로가 있다면 작성
+                                            remoteDirectory: "${env.REMOTE_DIRECTORY}", //배포할 위치
+                                            execCommand: "${env.EXEC_CMD}"
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    } catch(e) {
+                        env.DEPLOY_FLAG = "FAILURE"
+                    } finally {
+                        if(env.DEPLOY_FLAG == "FAILURE") {
+                            mattermostSend (
+                                color: "danger", 
+                                message: "Pulish Over SSH FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                            )
+                        } else{
+                            mattermostSend (
+                                color: "good", 
+                                message: "Pulish Over SSH SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Clear') {
+			steps {
+				script {
+                    sh "${env.CLEAR_CMD}" 
+
+                    if(env.DEPLOY_FLAG != "FAILURE") {
+                        mattermostSend (
+                            color: "good", 
+                            message: "Source Deploy SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                        )
+                    } else {
+                        mattermostSend (
+                            color: "danger", 
+                            message: "Source Deploy FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                        )
+                    }
+                }
+			}
+		}
+   }
+}
