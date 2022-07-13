@@ -22,6 +22,9 @@ public class OptionProductDatasetModel {
     @ApiModelProperty(notes = "옵션 연산자 단위(사칙연산부호(가중치 연산방식), 날짜단위(YEAR,MONTH,DAY...) 등)", example = "*", required = true) 
     private String operatorUnit;
 
+    @ApiModelProperty(notes = "옵션카테고리ID", example = "2", required = true) 
+    private String optCatId;
+
     @ApiModelProperty(notes = "정렬값", example = "1", required = true)  
     private Integer sort;
 

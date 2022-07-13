@@ -5,7 +5,7 @@
 
 <mapper namespace="com.bfly.management.mapper.master.CustomerMasterMapper">
 
-    <select id="createCustomer" parameterType="HashMap" resultType="HashMap" statementType="CALLABLE">
+    <select id="createCustomer" parameterType="HashMap" resultType="HashMap">
         call cu.sp_add_customer(
             #{p_params}::json,
             #{p_rm}::VARCHAR, 

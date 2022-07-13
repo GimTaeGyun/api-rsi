@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class ProductItemModel {
     
-    @ApiModelProperty(notes = "상품아이템명", example = "경기일보") 
+    @ApiModelProperty(notes = "상품아이템명", example = "경기일보", required = true) 
     private String itemNm;
 
     @ApiModelProperty(notes = "아이템유형", example = "MEDIA", required = true) 
@@ -19,16 +19,13 @@ public class ProductItemModel {
     @ApiModelProperty(notes = "기준단가", example = "60000.0", required = true) 
     private Double unitPrice;
 
-    @ApiModelProperty(notes = "아이템 식별키 정보", example = "1", required = true) 
-    private ProductItemKeyModel itemKeyInfo;
-
     @ApiModelProperty(notes = "유효시작일", example = "1900-01-01 00:00:00", required = true) 
     private String vldBeginDt;
 
-    @ApiModelProperty(notes = "유효만료일", example = "9999-12-31 00:00:00") 
+    @ApiModelProperty(notes = "유효만료일", example = "9999-12-31 00:00:00", required = true) 
     private String vldExpDt;    
 
-    @ApiModelProperty(notes = "정렬값", example = "11") 
+    @ApiModelProperty(notes = "정렬값", example = "11", required = true) 
     private Integer sort;    
 
     @ApiModelProperty(notes = "아이템설명", example = "상품그룹상세 설명") 

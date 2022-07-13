@@ -5,4 +5,12 @@
 
 <mapper namespace="com.bfly.management.mapper.master.ContractMasterMapper">
 
+    <select id="updateCartInfo" parameterType="HashMap" resultType="HashMap">
+        call cm.sp_mgt_cart_product(
+            #{p_params}::json,
+            #{p_rc}::int2,
+            #{p_rm}::VARCHAR
+        )
+    </select>
+
 </mapper>

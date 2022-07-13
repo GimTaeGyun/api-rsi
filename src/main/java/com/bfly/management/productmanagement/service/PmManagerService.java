@@ -10,6 +10,8 @@ import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.common.EnumMapperType;
 import com.bfly.management.model.productmanagement.master.OptionCategoryUpdateReqModel;
 import com.bfly.management.model.productmanagement.master.OptionProductUpdateReqModel;
+import com.bfly.management.model.productmanagement.master.ProductGroupUpdateReqModel;
+import com.bfly.management.model.productmanagement.master.ProductModel;
 import com.bfly.management.model.productmanagement.master.ProductUpdateReqModel;
 import com.bfly.management.model.productmanagement.slave.GetOptionCategoryReqModel;
 import com.bfly.management.model.productmanagement.slave.ProductItemReqModel;
@@ -18,7 +20,7 @@ import java.lang.SuppressWarnings;
 
 @Service
 @SuppressWarnings("unchecked")
-public class ManagerService extends ProductBaseService{
+public class PmManagerService extends ProductBaseService{
 
     public ApiResult<?> getProduct(ProductItemReqModel param) throws Exception {
         
@@ -26,7 +28,7 @@ public class ManagerService extends ProductBaseService{
         Enum<? extends EnumMapperType> responseCode = null;
         ArrayList<Object> resultArray = new ArrayList<Object>();
 
-        result = this.slaveMapper.getProduct(param.getSId());
+        result = this.slaveMapper.getProduct(param.getSid());
         if (result == null) {
             responseCode = CommonCode.COMMON_FAIL;
         }else{
@@ -38,7 +40,7 @@ public class ManagerService extends ProductBaseService{
         return new ApiResult<Object>(responseCode, resultArray);
     }
 
-    public ApiResult<?> updateProduct(ProductUpdateReqModel param) throws Exception {
+    public ApiResult<?> updateProductGroup(ProductGroupUpdateReqModel param) throws Exception {
         
         HashMap<String, Object> result = null;
         Enum<? extends EnumMapperType> responseCode = null;
@@ -49,7 +51,7 @@ public class ManagerService extends ProductBaseService{
         callParameter.put("rc",0);
         callParameter.put("rm", "OK");
 
-        result = this.masterMapper.setProduct(callParameter);
+        result = this.masterMapper.setProductGroup(callParameter);
         int rc = (int)result.get("p_rc");
         if (result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
@@ -131,7 +133,31 @@ public class ManagerService extends ProductBaseService{
         callParameter.put("rc",0);
         callParameter.put("rm", "OK");
 
-        result = this.masterMapper.setOptionCategory(callParameter);
+        result = this.masterMapper.setOptionProduct(callParameter);
+        
+        int rc = (int)result.get("p_rc");
+        if (result == null || rc == 255 ) {
+            responseCode = CommonCode.COMMON_FAIL;
+        }else{
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> updateProduct(ProductUpdateReqModel param) throws Exception {
+        
+        HashMap<String, Object> result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        ArrayList<Object> resultArray = new ArrayList<Object>();
+        HashMap<String, Object> callParameter = new HashMap<String, Object>();
+
+        callParameter.put("jsonParameter", objectMapper.writeValueAsString(param));
+        callParameter.put("rc",0);
+        callParameter.put("rm", "OK");
+
+        result = this.masterMapper.setProduct(callParameter);
         int rc = (int)result.get("p_rc");
         if (result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;

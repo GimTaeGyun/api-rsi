@@ -13,7 +13,7 @@ import com.bfly.management.model.productmanagement.slave.ProductDetailItemReqMod
 
 @Service
 @SuppressWarnings("unchecked")
-public class SubscriptionService extends ProductBaseService{ 
+public class PmSubscriptionService extends ProductBaseService{ 
 
     public ApiResult<?> getProductDetail(ProductDetailItemReqModel param) throws Exception{
 

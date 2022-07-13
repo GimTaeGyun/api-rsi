@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class PromotionModel {
     
-    @ApiModelProperty(notes = "약관부가정보(프로모션 동의 등)", example = "", required = true) 
+    @ApiModelProperty(notes = "약관부가정보(프로모션 동의 등)") 
     private PromotionDetailModel promotion;
 
 }

@@ -13,7 +13,7 @@ import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
 
 @Service
-public class CustomerManagerService extends BaseService{
+public class CuSubscriptionService extends BaseService{
 
     public ApiResult<?> createCustomer(CustomerInfoModel param) throws Exception {
         

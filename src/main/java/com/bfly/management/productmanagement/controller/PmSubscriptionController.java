@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.productmanagement.slave.ProductDetailItemReqModel;
-import com.bfly.management.productmanagement.service.SubscriptionService;
+import com.bfly.management.productmanagement.service.PmSubscriptionService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api( tags = "Subscription API")
+@Api( tags = "통합구독 - 상품관리 API")
 @RequestMapping(value="/subscription", produces = { "application/json" })
-public class SubscriptionController {
+public class PmSubscriptionController {
     
     @Autowired
-    SubscriptionService subscriptionService;
+    PmSubscriptionService subscriptionService;
 
     /**
 	 * 상품 리스트 상세조회

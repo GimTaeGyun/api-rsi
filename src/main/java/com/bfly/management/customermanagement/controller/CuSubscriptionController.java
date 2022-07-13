@@ -1,6 +1,9 @@
 package com.bfly.management.customermanagement.controller;
 
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +12,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bfly.management.customermanagement.service.CustomerManagerService;
+import com.bfly.management.customermanagement.service.CuSubscriptionService;
+import com.bfly.management.customermanagement.service.LoginService;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
+import com.bfly.management.model.customermanagement.slave.LoginReqModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api( tags = "Manager API")
-@RequestMapping(value="/customer/manager", produces = { "application/json" })
-public class CustomerManagerController {
+@Api( tags = "통합구독 - 고객관리 API")
+@RequestMapping(value="/subscription", produces = { "application/json" })
+public class CuSubscriptionController {
     @Autowired
-    CustomerManagerService customerManageService;
+    CuSubscriptionService cuSubscriptionService;
+
+	@Autowired
+    LoginService loginService;
+
+	/**
+	 * 고객관리 로그인
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "로그인", notes = "로그인")
+	@PostMapping("/customer/login")
+	public ApiResult<HashMap<String, Object>> login(HttpServletRequest request, @RequestBody LoginReqModel param) throws Exception {
+		return loginService.login(param);
+	}
 
 	/**
 	 * 고객관리 고객가입
@@ -32,9 +53,9 @@ public class CustomerManagerController {
 	 * @throws Exception
 	 */
     @ApiOperation(value = "고객 가입", notes = "고객 가입 ( sid : 서비스 ID )")
-	@PostMapping("/signup")
+	@PostMapping("/customer/signup")
 	public ApiResult<?> createCustomer(@Valid @RequestBody CustomerInfoModel param) throws Exception {
-		return customerManageService.createCustomer(param);
+		return cuSubscriptionService.createCustomer(param);
 	}
 
 	/**
@@ -44,10 +65,10 @@ public class CustomerManagerController {
 	 * @return
 	 * @throws Exception
 	 */
-    @ApiOperation(value = "고객정보 체크", notes = "고객정보 체크")
-	@PostMapping("/check")
+    @ApiOperation(value = "고객정보 체크", notes = "field : 체크 항목, value1 : 값1, value2: 값2 (상세한 설명은 Model Example 참고)")
+	@PostMapping("/customer/check")
 	public ApiResult<?> checkCustomer(@Valid @RequestBody CustomerCheckModel param) throws Exception {
-		return customerManageService.checkCustomer(param);
+		return cuSubscriptionService.checkCustomer(param);
 	}
 
 }

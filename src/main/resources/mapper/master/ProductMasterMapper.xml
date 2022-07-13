@@ -7,6 +7,15 @@
 
     <select id="setProduct" parameterType="HashMap" resultType="HashMap">
 
+        call pm.sp_mgt_product(
+            #{jsonParameter}::json,
+            #{rc}::int2, 
+            #{rm}::VARCHAR
+        )
+    </select>
+
+    <select id="setProductGroup" parameterType="HashMap" resultType="HashMap">
+
         call pm.sp_mgt_product_group(
             #{jsonParameter}::json,
             #{rc}::int2, 
@@ -16,7 +25,7 @@
 
     <select id="setOptionCategory" parameterType="HashMap" resultType="HashMap">
 
-        call pm.sp_mgt_option_group(
+        call pm.sp_mgt_option_category(
             #{jsonParameter}::json,
             #{rc}::int2, 
             #{rm}::VARCHAR
@@ -31,5 +40,6 @@
             #{rm}::VARCHAR
         )
     </select>
+
 
 </mapper>

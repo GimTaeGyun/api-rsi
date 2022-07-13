@@ -13,4 +13,10 @@
 
 </select>
 
+<select id="getCartInfo" resultType="String" parameterType="String">
+    <!-- 장바구니 조회 -->
+    SELECT  cm.fn_get_json_cart_prodcut(#{p_cust_id});
+
+</select>
+
 </mapper>

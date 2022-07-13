@@ -13,7 +13,7 @@ public class ProductModel {
     @ApiModelProperty(notes = "상품ID, 추가 경우 null, 수정/삭제시 대상 id", example = "0") 
     private String prdId;
 
-    @ApiModelProperty(notes = "상품명", example = "(개인) 종판비신탁매체 전자스크랩") 
+    @ApiModelProperty(notes = "상품명", example = "(개인) 종판비신탁매체 전자스크랩", required = true) 
     private String prdNm;
 
     @ApiModelProperty(notes = "상품유형(WIDGET: 위젯, MEDIA:매체)", example = "MEDIA", required = true) 
@@ -23,12 +23,12 @@ public class ProductModel {
     private String prdGrpId;
 
     @ApiModelProperty(notes = "유효시작일", example = "1900-01-01 00:00:00", required = true) 
-    private String vldBeginBt;
+    private String vldBeginDt;
 
-    @ApiModelProperty(notes = "유효만료일", example = "9999-12-31 00:00:00") 
+    @ApiModelProperty(notes = "유효만료일", example = "9999-12-31 00:00:00", required = true) 
     private String vldExpDt;    
 
-    @ApiModelProperty(notes = "정렬값", example = "1") 
+    @ApiModelProperty(notes = "정렬값", example = "1", required = true) 
     private Integer sort;    
 
     @ApiModelProperty(notes = "상품설명", example = "상품 상세설명") 

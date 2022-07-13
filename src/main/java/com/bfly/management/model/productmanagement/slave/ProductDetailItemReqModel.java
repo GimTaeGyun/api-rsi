@@ -10,7 +10,7 @@ import lombok.Setter;
 @ApiModel(description = "상품리스트 상세정보 가져오기 REQ")
 public class ProductDetailItemReqModel {
     
-    @ApiModelProperty(notes = "Product ID", example = "1")
+    @ApiModelProperty(notes = "상품 ID", example = "1", required = true)
     private Integer p_prd_id;
     
 }

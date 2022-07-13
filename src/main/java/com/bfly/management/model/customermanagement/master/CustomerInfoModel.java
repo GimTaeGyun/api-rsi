@@ -67,7 +67,7 @@ public class CustomerInfoModel {
     @ApiModelProperty(notes = "약관동의여부(true:동의, false:미동의)  *필수", example = "true", required = true)
     private boolean tosIsAgree;									
 
-    @ApiModelProperty(notes = "약관부가정보(프로모션 동의 등)", example = "")
+    @ApiModelProperty(notes = "약관부가정보(프로모션 동의 등)")
     private PromotionModel tosInfo;						
 
 }

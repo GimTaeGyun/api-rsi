@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bfly.management.mapper.master.ContractMasterMapper;
 import com.bfly.management.mapper.slave.ContractSlaveMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -17,4 +18,7 @@ public class ContractBaseService {
 
     @Autowired
     ContractSlaveMapper slaveMapper;
+
+    @Autowired
+    ObjectMapper objectMapper;
 }

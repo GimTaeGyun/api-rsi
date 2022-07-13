@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class OptionDatasetModel {
     
-    @ApiModelProperty(notes = "옵션카테고리ID, 추가 경우 null, 수정/삭제시 대상 id", example = "0", required = true) 
+    @ApiModelProperty(notes = "옵션카테고리ID, 추가 경우 null, 수정/삭제시 대상 id", example = "0") 
     private Integer optCatId;
 
     @ApiModelProperty(notes = "옵션카테고리명", example = "테스트상품옵션1", required = true) 
