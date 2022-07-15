@@ -12,7 +12,6 @@ import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.productmanagement.master.OptionCategoryUpdateReqModel;
 import com.bfly.management.model.productmanagement.master.OptionProductUpdateReqModel;
 import com.bfly.management.model.productmanagement.master.ProductGroupUpdateReqModel;
-import com.bfly.management.model.productmanagement.master.ProductModel;
 import com.bfly.management.model.productmanagement.master.ProductUpdateReqModel;
 import com.bfly.management.model.productmanagement.slave.GetOptionCategoryReqModel;
 import com.bfly.management.model.productmanagement.slave.ProductItemReqModel;

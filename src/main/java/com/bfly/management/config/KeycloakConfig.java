@@ -31,6 +31,9 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http
                 .authorizeRequests()
+                .antMatchers("/subscription/customer/login").permitAll() // 허용
+                .antMatchers("/subscription/customer/signup").permitAll() // 허용
+                .antMatchers("/subscription/customer/check").permitAll() // 허용
                 .antMatchers("/test/permitAll").permitAll() // 허용
                 .antMatchers("/product/createtoken").permitAll() // 허용
                 .antMatchers("/manager/**").authenticated() // 인증필요
@@ -38,6 +41,7 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/keycloak/createUser").hasRole("ADMIN") // 인증필요
                 .antMatchers("/keycloak/deleteUser").hasRole("ADMIN") // 인증필요
                 .antMatchers("/keycloak/createtoken").permitAll() // 허용
+
                 .anyRequest()
                 .permitAll();
         http.csrf().disable().cors().disable();

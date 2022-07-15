@@ -1,7 +1,5 @@
 package com.bfly.management.model.productmanagement.master;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
