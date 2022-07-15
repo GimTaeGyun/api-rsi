@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bfly.management.keycloakmanagement.service.KeycloakService;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreateUserReqModel;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreteTokenReqModel;
+import com.bfly.management.model.keycloakmanagement.KeycloakRefreshTokenReqModel;
 
 import io.swagger.annotations.Api;
 @RestController
@@ -36,5 +37,10 @@ public class KeycloakController {
     @PostMapping("/deleteUser")
     public Object deleteUser(@RequestBody KeycloakCreateUserReqModel param) {
         return keycloakService.deleteUser(param);
+    }
+
+    @PostMapping("/refreshtoken")
+    public Object refreshToken(@RequestBody KeycloakRefreshTokenReqModel param) throws Exception {
+        return keycloakService.refreshToken(param);
     }
 }

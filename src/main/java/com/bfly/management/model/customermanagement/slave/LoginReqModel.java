@@ -10,10 +10,10 @@ import lombok.Setter;
 @ApiModel(description = "로그인 REQ")
 public class LoginReqModel {
 
-	@ApiModelProperty(notes = "로그인 ID", example = "gtgyun", required = true) 
+	@ApiModelProperty(notes = "로그인 ID", example = "g9soft", required = true) 
 	private String usrId;
 
-	@ApiModelProperty(notes = "로그인 비밀번호", example = "bfly7714", required = true) 
+	@ApiModelProperty(notes = "로그인 비밀번호", example = "g9soft", required = true) 
 	private String usrPw;
 
 	@ApiModelProperty(notes = "고객 ID", example = "") 

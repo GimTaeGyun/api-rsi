@@ -32,7 +32,7 @@ public class KeycloakCreateUserReqModel {
   private KeycloakUserRoleModel roles;
   
   @ApiModelProperty(hidden=true)
-  private String userPw = "bfly7714";
+  private String userPw = "Pa$$w0rd";
 
   @ApiModelProperty(hidden=true)
   private int status;

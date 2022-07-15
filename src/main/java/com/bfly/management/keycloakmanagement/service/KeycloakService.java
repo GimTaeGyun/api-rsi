@@ -34,6 +34,7 @@ import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreateUserReqModel;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreteTokenReqModel;
+import com.bfly.management.model.keycloakmanagement.KeycloakRefreshTokenReqModel;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -131,8 +132,42 @@ public class KeycloakService extends KeycloakBaseService{
         params.add("client_id", param.getClientId());
         params.add("username", param.getUserId());
         params.add("grant_type", "password");
-        params.add("password", "bfly7714");
+        params.add("password", "Pa$$w0rd");
         params.add("client_secret", param.getClientSecret());
+
+        String result = "";
+        
+        try{
+        result = WebClient.create()
+            .post()
+            .uri(uri)
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .body(BodyInserters.fromFormData(params))
+            .exchange()
+            .block()
+            .bodyToMono(String.class)
+            .block();
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new BusinessException(ApiCode.API_TOKEN_CREATE_FAIL);
+        }
+        hm = objectMapper.readValue(result, HashMap.class);
+        return hm;
+    }
+
+    
+    public HashMap<String, Object> GenerateToken() throws Exception
+    {
+        HashMap<String, Object> hm = new HashMap<String, Object>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        String uri = String.format(tokenUrl, "ManageMentAPI");
+
+        params.add("client_id", "ApplicationClient");
+        params.add("username", "bflysoft");
+        params.add("grant_type", "password");
+        params.add("password", "Pa$$w0rd");
+        params.add("client_secret", "2bEioqNZ5snuOcf7QOHkzKkrfhk9tgH1");
 
         String result = "";
         
@@ -185,5 +220,38 @@ public class KeycloakService extends KeycloakBaseService{
         }else {
             return new ApiResult<>(CommonCode.COMMON_FAIL, null);
         }
+    }
+
+    public HashMap<String, Object> refreshToken(KeycloakRefreshTokenReqModel param) throws Exception
+    {
+        HashMap<String, Object> hm = new HashMap<String, Object>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        
+        String uri = String.format(tokenUrl, param.getRealm());
+
+        params.add("client_id", param.getClientId());
+        params.add("client_secret", param.getClientSecret());
+        params.add("refresh_token", param.getRefreshToken());
+        params.add("grant_type", "refresh_token");
+
+        String result = "";
+        
+        try{
+        result = WebClient.create()
+            .post()
+            .uri(uri)
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .body(BodyInserters.fromFormData(params))
+            .exchange()
+            .block()
+            .bodyToMono(String.class)
+            .block();
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new BusinessException(ApiCode.API_TOKEN_CREATE_FAIL);
+        }
+        hm = objectMapper.readValue(result, HashMap.class);
+        return hm;
     }
 }
