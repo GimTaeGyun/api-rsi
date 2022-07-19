@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bfly.management.mapper.slave.AdminSlaveMapper">
+
+	<!-- 어드민 로그인정보 -->
+	<select id="selectAdminLogin" parameterType="HashMap" resultType="HashMap">
+        call app.sp_chk_adm_login(
+            #{p_id}::VARCHAR,
+            #{p_rm}::VARCHAR, 
+            #{p_rc}::int2,
+            #{p_pw}::VARCHAR,
+            #{p_usr_nm}::VARCHAR,
+            #{p_usr_tp}::VARCHAR
+        )
+	</select>
+
+</mapper>

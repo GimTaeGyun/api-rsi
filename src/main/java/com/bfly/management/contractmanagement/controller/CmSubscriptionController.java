@@ -49,8 +49,8 @@ public class CmSubscriptionController {
 	 */
     @ApiOperation(value = "장바구니 추가, 수정, 삭제", notes = "장바구니 추가, 수정, 삭제")
 	@PostMapping("/contract/cart/update")
-	public ApiResult<?> updateCartInfo(@Valid @RequestBody CartUpdateReqModel param) throws Exception {
-		return cmSubscriptionService.updateCartInfo(param);
+	public ApiResult<?> setCartInfo(@Valid @RequestBody CartUpdateReqModel param) throws Exception {
+		return cmSubscriptionService.setCartInfo(param);
 	}
 
 }

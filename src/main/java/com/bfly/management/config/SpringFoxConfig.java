@@ -62,6 +62,35 @@ public class SpringFoxConfig {
 
 	@Value("${customvalues.keycloak.authUrl}")
     private String authUrl;
+
+	@Bean
+	public Docket CreateDocketAdmin() {
+
+		List<Response> list = getGlobalResponse();
+		String title = "AdminManagement";
+
+		String desc = title + " API";
+		ApiInfo apiinfo = new ApiInfoBuilder()
+				.title(title)
+				.description(desc)
+				.build();
+
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName(title)
+				.securitySchemes(buildSecurityScheme())
+				.securityContexts(Arrays.asList(securityContext()))
+				.apiInfo(apiinfo)
+				.useDefaultResponseMessages(false)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.adminmanagement.controller"))
+				.paths(PathSelectors.ant("/**"))
+				.build()
+				.globalResponses(HttpMethod.GET, list)
+				.globalResponses(HttpMethod.PUT, list)
+				.globalResponses(HttpMethod.POST, list)
+				.globalResponses(HttpMethod.DELETE, list);
+
+	}
 	
 	@Bean
 	public Docket CreateDocketContract() {

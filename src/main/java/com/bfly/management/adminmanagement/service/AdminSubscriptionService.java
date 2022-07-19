@@ -1,4 +1,4 @@
-package com.bfly.management.contractmanagement.service;
+package com.bfly.management.adminmanagement.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,26 +12,9 @@ import com.bfly.management.model.contractmanagement.master.CartUpdateReqModel;
 import com.bfly.management.model.contractmanagement.slave.CartReqModel;
 
 @Service
-public class CmSubscriptionService extends ContractBaseService{
+public class AdminSubscriptionService extends AdminBaseService{
 
-    public ApiResult<?> getCartInfo(CartReqModel param) throws Exception {
-        
-        String result = null;
-        Enum<? extends EnumMapperType> responseCode = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
-        result = this.slaveMapper.getCartInfo(param.getP_cust_id());
-        if (result == null) {
-            responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            resultArray = objectMapper.readValue(result, ArrayList.class);
-            responseCode = CommonCode.COMMON_SUCCESS;
-        }
-        
-        return new ApiResult<Object>(responseCode, resultArray);
-    }
-
-    public ApiResult<?> setCartInfo(CartUpdateReqModel param) throws Exception {
+    public ApiResult<?> setUser(CartUpdateReqModel param) throws Exception {
         
         
         Enum<? extends EnumMapperType> responseCode = null;
@@ -45,7 +28,7 @@ public class CmSubscriptionService extends ContractBaseService{
         callParameter.put("p_rc",0);
         callParameter.put("p_rm", "OK");
         
-        result = this.masterMapper.setCartInfo(callParameter);
+        result = this.masterMapper.setUser(callParameter);
         
         int rc = (int)result.get("p_rc");
         if (result == null || rc == 255 ) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface ContractMasterMapper {
+public interface AdminMasterMapper {
     
-    public HashMap<String, Object> setCartInfo(HashMap<String, Object> parameter);
+    public HashMap<String, Object> setUser(HashMap<String, Object> parameter);
 }

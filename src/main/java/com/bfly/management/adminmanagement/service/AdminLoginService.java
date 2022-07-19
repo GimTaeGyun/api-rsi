@@ -1,7 +1,8 @@
-package com.bfly.management.customermanagement.service;
+package com.bfly.management.adminmanagement.service;
 import java.util.HashMap;
 
 import com.bfly.management.keycloakmanagement.service.KeycloakService;
+import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.common.EnumMapperType;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class LoginService extends BaseService{
+public class AdminLoginService extends AdminBaseService{
 
     public ObjectMapper objectMapper = new ObjectMapper();
 
@@ -23,7 +24,7 @@ public class LoginService extends BaseService{
     @Autowired
     KeycloakService keycloakService;
 
-	public ApiResult<HashMap<String, Object>> login(LoginReqModel param) throws Exception
+	public ApiResult<HashMap<String, Object>> login(AdminLoginReqModel param) throws Exception
 	{
 
 		Enum<? extends EnumMapperType> responseCode = null;
@@ -38,10 +39,10 @@ public class LoginService extends BaseService{
         callParameter.put("p_rc",0);
         callParameter.put("p_rm", "OK");
 		callParameter.put("p_pw", passwordEncoder.encode(param.getUsrPw()));
-		callParameter.put("p_cust_id", param.getCust_id());
-		callParameter.put("p_cust_nm", param.getCust_nm());
+		callParameter.put("p_usr_nm", param.getUsrNm());
+		callParameter.put("p_usr_tp", param.getUsrTp());
 
-		result = this.slaveMapper.selectLogin(callParameter);
+		result = this.slaveMapper.selectAdminLogin(callParameter);
 
 		if( null == result ){ // 아이디에 대한 정보 가 없을시
 			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
@@ -54,10 +55,10 @@ public class LoginService extends BaseService{
 
 			// token 인증 추가 필요
 			HashMap<String, Object> resultToken = keycloakService.GenerateToken();
-
+			
 			loginMap.put("returnMsg", result.get("p_rm"));
-			loginMap.put("custId", result.get("p_cust_id"));
-			loginMap.put("custNm", result.get("p_cust_nm"));
+			loginMap.put("usrNm", result.get("p_usr_nm"));
+			loginMap.put("usrTp", result.get("p_usr_tp"));
 			loginMap.put("accessToken", resultToken.get("access_token"));
 			loginMap.put("refreshToken", resultToken.get("refresh_token"));
 		}
