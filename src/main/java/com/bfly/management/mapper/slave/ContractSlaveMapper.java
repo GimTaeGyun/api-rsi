@@ -10,7 +10,7 @@ public interface ContractSlaveMapper {
 
     /**
      * 장바구니 조회
-     * @param sId
+     * @param p_cust_id
      * @return String
      */
     public String getCartInfo(@Param("p_cust_id") String p_cust_id);

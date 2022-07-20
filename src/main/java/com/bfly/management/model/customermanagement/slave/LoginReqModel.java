@@ -16,9 +16,4 @@ public class LoginReqModel {
 	@ApiModelProperty(notes = "로그인 비밀번호", example = "g9soft", required = true) 
 	private String usrPw;
 
-	@ApiModelProperty(notes = "고객 ID", example = "") 
-	private String cust_id;
-
-	@ApiModelProperty(notes = "고객 이름", example = "") 
-	private String cust_nm;
 }

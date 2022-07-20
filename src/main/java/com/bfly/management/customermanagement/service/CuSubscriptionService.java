@@ -11,6 +11,7 @@ import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.common.EnumMapperType;
 import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
+import com.bfly.management.model.customermanagement.slave.PasswordCheckModel;
 
 @Service
 public class CuSubscriptionService extends BaseService{
@@ -63,6 +64,6 @@ public class CuSubscriptionService extends BaseService{
         }
 
         return new ApiResult<Object>(responseCode, result);
-    }   
+    }
 
 }

@@ -15,10 +15,4 @@ public class AdminLoginReqModel {
 
 	@ApiModelProperty(notes = "로그인 비밀번호", example = "sysadm", required = true) 
 	private String usrPw;
-
-	@ApiModelProperty(notes = "사용자 명", example = "") 
-	private String usrNm;
-
-	@ApiModelProperty(notes = "사용자 유형", example = "") 
-	private String usrTp;
 }

@@ -12,4 +12,8 @@ public interface AdminSlaveMapper {
 
     public HashMap<String, Object> selectAdminLogin(HashMap<String, Object> parameter);
     
+    public String selectUser(HashMap<String, Object> parameter);
+
+    public String selectUserPw(@Param("p_usr_id") String p_usr_id);
+    
 }

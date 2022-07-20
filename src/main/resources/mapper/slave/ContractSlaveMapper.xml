@@ -5,18 +5,10 @@
 
 <mapper namespace="com.bfly.management.mapper.slave.ContractSlaveMapper">
 
-
-
-<select id="testQuery" resultType="String">
-
-    select version()
-
-</select>
-
-<select id="getCartInfo" resultType="String" parameterType="String">
     <!-- 장바구니 조회 -->
-    SELECT  cm.fn_get_json_cart_prodcut(#{p_cust_id});
-
-</select>
+    <select id="getCartInfo" resultType="String" parameterType="String">
+        SELECT  
+            cm.fn_get_json_cart_prodcut(#{p_cust_id});
+    </select>
 
 </mapper>

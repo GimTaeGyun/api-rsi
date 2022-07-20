@@ -7,7 +7,7 @@
 
 	<!-- 어드민 로그인정보 -->
 	<select id="selectAdminLogin" parameterType="HashMap" resultType="HashMap">
-        call app.sp_chk_adm_login(
+        CALL app.sp_chk_adm_login(
             #{p_id}::VARCHAR,
             #{p_rm}::VARCHAR, 
             #{p_rc}::int2,
@@ -16,5 +16,11 @@
             #{p_usr_tp}::VARCHAR
         )
 	</select>
+
+    <!-- 어드민 사용자 검색 -->
+    <select id="selectUser" parameterType="HashMap" resultType="String" >    
+        SELECT 
+            app.fn_get_users(#{p_usrId}::varchar(64), #{p_usrName}::varchar(64), #{p_status}::smallint)
+    </select>
 
 </mapper>

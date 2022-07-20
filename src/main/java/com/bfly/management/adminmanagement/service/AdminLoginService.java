@@ -36,11 +36,12 @@ public class AdminLoginService extends AdminBaseService{
 		HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
 		callParameter.put("p_id", param.getUsrId());
+		// p_id 제외한 나머지 param 값은 상관없음, sp 형식 맞추기 위해 공백 값 넣어줌
         callParameter.put("p_rc",0);
         callParameter.put("p_rm", "OK");
-		callParameter.put("p_pw", passwordEncoder.encode(param.getUsrPw()));
-		callParameter.put("p_usr_nm", param.getUsrNm());
-		callParameter.put("p_usr_tp", param.getUsrTp());
+		callParameter.put("p_pw", "");
+		callParameter.put("p_usr_nm", "");
+		callParameter.put("p_usr_tp", "");
 
 		result = this.slaveMapper.selectAdminLogin(callParameter);
 

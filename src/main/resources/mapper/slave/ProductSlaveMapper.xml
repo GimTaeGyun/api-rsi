@@ -5,36 +5,26 @@
 
 <mapper namespace="com.bfly.management.mapper.slave.ProductSlaveMapper">
 
-<select id="testQuery" resultType="String">
-    <!-- DB 연동 테스트 쿼리 -->
-    select version()
-
-</select>
-
-<select id="getProduct" resultType="String" parameterType="Integer">
     <!-- 상품군 조회 -->
-    SELECT JSON_AGG(pm.fn_get_json_product_group(A.prd_grp_id) ORDER BY A.sort) AS result 
-    FROM pm.product_group A 
-    WHERE A.status = 1 
-    AND A.upp_prd_grp_id = 0 /*최상위 ROOT prd_grp_id*/
-    AND A.sid = #{sId} /*서비스ID*/
-    
+    <select id="getProduct" resultType="String" parameterType="Integer">
+        SELECT JSON_AGG(pm.fn_get_json_product_group(A.prd_grp_id) ORDER BY A.sort) AS result 
+        FROM pm.product_group A 
+        WHERE A.status = 1 
+        AND A.upp_prd_grp_id = 0 /*최상위 ROOT prd_grp_id*/
+        AND A.sid = #{sId} /*서비스ID*/
+    </select>
 
-</select>
-
-<select id="getOptionCategory" resultType="String" parameterType="Integer">
     <!-- 옵션 카테고리 조회 -->
-    SELECT 
-        pm.fn_get_json_option_category(#{p_opt_cat_id}) AS result
+    <select id="getOptionCategory" resultType="String" parameterType="Integer">
+        SELECT 
+            pm.fn_get_json_option_category(#{p_opt_cat_id}) AS result
+    </select>
 
-</select>
 
-
-<select id="getProductDetail" resultType="String" parameterType="Integer">
     <!-- 상품 상세리스트 조회-->
-    SELECT 
-        pm.fn_get_json_product_detail(#{p_prd_id}) AS result
-
-</select>
+    <select id="getProductDetail" resultType="String" parameterType="Integer">    
+        SELECT 
+            pm.fn_get_json_product_detail(#{p_prd_id}) AS result
+    </select>
 
 </mapper>
