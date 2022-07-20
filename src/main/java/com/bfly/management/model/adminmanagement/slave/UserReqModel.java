@@ -10,10 +10,10 @@ import lombok.Setter;
 @ApiModel(description = "사용자 조회 REQ")
 public class UserReqModel {
     
-    @ApiModelProperty(notes = "사용자 아이디(로그인 아이디 아님)", example = "g9soft", required = true)
+    @ApiModelProperty(notes = "사용자 아이디(로그인 아이디 아님)", example = "sysadm", required = true)
     private String usrId;
     
-    @ApiModelProperty(notes = "사용자 명", example = "지구소프트", required = true)
+    @ApiModelProperty(notes = "사용자 명", example = "시스템어드민", required = true)
     private String usrNm;
 
     @ApiModelProperty(notes = "사용자 상태(1:활성화, 0:비활성화)", example = "1", required = true)
