@@ -5,7 +5,7 @@ spring:
       active: dev
   application:
     name: management
-      
+
   cloud:
     config:
       uri: http://config:8888

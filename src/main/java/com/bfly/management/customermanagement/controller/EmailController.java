@@ -37,8 +37,9 @@ public class EmailController {
 	 */
     @ApiOperation(value = "가입완료 메일링", notes = "가입완료 메일링")
 	@PostMapping("/complete/join")
-	public ApiResult<?> completeJoin(HttpServletRequest request, @RequestParam @NotBlank(message = "param값은 필수입니다.") String param) throws Exception {
-		return emailService.completeJoin(param);
+	public ApiResult<?> completeJoin(HttpServletRequest request, 
+												@RequestParam @NotBlank(message = "param값은 필수입니다.") String email, String username) throws Exception {
+		return emailService.completeJoin(email, username);
 	}
 
 	/**

@@ -1,11 +1,14 @@
 package com.bfly.management.customermanagement.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Random;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.codec.binary.Base64;
@@ -15,6 +18,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.bfly.management.config.cache.RedisUtil;
 import com.bfly.management.model.common.ApiResult;
@@ -33,17 +38,28 @@ public class EmailService extends BaseService {
     private String logoUrl;
 
     @Autowired
+    private SpringTemplateEngine templateEngine;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
     private RedisUtil redisUtil;
     
-    public ApiResult<?> completeJoin(String param) throws Exception {
+    public ApiResult<?> completeJoin(String email, String username) throws Exception {
         
         String result = null;
         Enum<? extends EnumMapperType> responseCode = null;
 
-        result = this.slaveMapper.testQuery();
+        // result = this.slaveMapper.testQuery();
+
+        HashMap<String, String> hm = new HashMap<String, String>();
+        hm.put("imageurl", getByteArrayFromImageURL(logoUrl));
+        username = "안녕하세요. "+username+"님 가입을 환영합니다 :)";
+        hm.put("username",username);
+
+        send("가입을 환영합니다", email, "welcome", hm);
+        
         responseCode = CommonCode.COMMON_SUCCESS;
 
         return new ApiResult<String>(responseCode, result);
@@ -138,4 +154,32 @@ public class EmailService extends BaseService {
 		}
 		return null;
 	}
+
+    public void send(String title, String to, String templateName, HashMap<String, String> values) throws MessagingException, IOException {
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        //메일 제목 설정
+        helper.setSubject(title);
+
+        //수신자 설정
+        helper.setTo(to);
+
+        //발신자 설정
+        helper.setFrom("support@bflysoft.com");
+
+        //템플릿에 전달할 데이터 설정
+        Context context = new Context();
+        values.forEach((key, value)->{
+            context.setVariable(key, value);
+        });
+
+        //메일 내용 설정 : 템플릿 프로세스
+        String html = templateEngine.process(templateName, context);
+        helper.setText(html, true);
+
+        //메일 보내기
+        javaMailSender.send(message);
+    }
 }
