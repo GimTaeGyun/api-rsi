@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
 import com.bfly.management.model.adminmanagement.master.UserDeleteReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
@@ -94,6 +95,25 @@ public class AdminSubscriptionService extends AdminBaseService{
             responseCode = CommonCode.COMMON_FAIL;
         }else{
             resultArray = objectMapper.readValue(result, ArrayList.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> selectUserGroup(UserGroupReqModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        // ArrayList<Object> resultArray = new ArrayList<Object>();
+        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+
+        result = this.slaveMapper.selectUserGroup(Integer.parseInt(param.getUsrGrpId()));
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        }else{
+            resultArray = objectMapper.readValue(result, HashMap.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         

@@ -17,6 +17,7 @@ import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
 import com.bfly.management.model.adminmanagement.master.UserDeleteReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 
@@ -43,7 +44,7 @@ public class AdminSubscriptionController {
     @ApiOperation(value = "어드민 로그인", notes = "어드민 로그인")
 	@PostMapping("/admin/login")
 	public ApiResult<HashMap<String, Object>> login(HttpServletRequest request, @RequestBody AdminLoginReqModel param) throws Exception {
-		return loginService.login(param);
+		return loginService.adminLogin(param);
 	}
 
 	/**
@@ -80,9 +81,22 @@ public class AdminSubscriptionController {
 	 * @throws Exception
 	 */
     @ApiOperation(value = "사용자 검색", notes = "사용자 검색")
-	@PostMapping("/admin/user/select")
+	@PostMapping("/admin/user/inquiry")
 	public ApiResult<?> selectUser(@Valid @RequestBody UserReqModel param) throws Exception {
 		return adminSubscriptionService.selectUser(param);
+	}
+
+	/**
+	 * 사용자 그룹 검색
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 그룹 검색", notes = "사용자 그룹 검색")
+	@PostMapping("/admin/usergroup/inquiry")
+	public ApiResult<?> selectUserGroup(@Valid @RequestBody UserGroupReqModel param) throws Exception {
+		return adminSubscriptionService.selectUserGroup(param);
 	}
 
 	/**

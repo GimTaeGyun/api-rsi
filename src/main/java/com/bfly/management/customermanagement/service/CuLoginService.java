@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class LoginService extends BaseService{
+public class CuLoginService extends BaseService{
 
     public ObjectMapper objectMapper = new ObjectMapper();
 
@@ -23,7 +23,7 @@ public class LoginService extends BaseService{
     @Autowired
     KeycloakService keycloakService;
 
-	public ApiResult<HashMap<String, Object>> login(LoginReqModel param) throws Exception
+	public ApiResult<HashMap<String, Object>> customerLogin(LoginReqModel param) throws Exception
 	{
 
 		Enum<? extends EnumMapperType> responseCode = null;
@@ -32,23 +32,22 @@ public class LoginService extends BaseService{
 
 		HashMap<String, Object> loginMap = new HashMap<>();
 
-		HashMap<String, Object> callParameter = new HashMap<String, Object>();
+		// 아이디, 패스워드 공백 체크
+		if(param.getUsrId() == null || "".equals(param.getUsrId())){
+			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
+		}
 
-		callParameter.put("p_id", param.getUsrId());
-		// p_id 제외한 나머지 param 값은 상관없음, sp 형식 맞추기 위해 공백 값 넣어줌
-        callParameter.put("p_rc",0);
-        callParameter.put("p_rm", "OK");
-		callParameter.put("p_pw", "");
-		callParameter.put("p_cust_id", "");
-		callParameter.put("p_cust_nm", "");
+		if(param.getUsrPw() == null || "".equals(param.getUsrPw())){
+			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
+		}
 
-		result = this.slaveMapper.selectLogin(callParameter);
+		result = this.slaveMapper.selectLogin(param.getUsrId());
 
 		if( null == result ){ // 아이디에 대한 정보 가 없을시
 			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
 		}else{
 			// Password 확인
-			if (!passwordEncoder.matches(param.getUsrPw(), (String)result.get("p_pw")))
+			if (!passwordEncoder.matches(param.getUsrPw(), (String)result.get("login_pw")))
 			{
 				return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
 			}
@@ -56,19 +55,15 @@ public class LoginService extends BaseService{
 			// token 인증 추가 필요
 			HashMap<String, Object> resultToken = keycloakService.GenerateToken();
 
-			loginMap.put("returnMsg", result.get("p_rm"));
-			loginMap.put("custId", result.get("p_cust_id"));
-			loginMap.put("custNm", result.get("p_cust_nm"));
+			loginMap.put("returnMsg", "OK");
+			loginMap.put("custId", result.get("cust_id"));
+			loginMap.put("custNm", result.get("cust_nm"));
+			loginMap.put("custStatus", result.get("status"));
 			loginMap.put("accessToken", resultToken.get("access_token"));
 			loginMap.put("refreshToken", resultToken.get("refresh_token"));
-		}
 
-		int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
-            responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            responseCode = CommonCode.COMMON_SUCCESS;
-        }
+			responseCode = CommonCode.COMMON_SUCCESS;
+		}
 
 		return new ApiResult<HashMap<String, Object>>(responseCode, loginMap);
 

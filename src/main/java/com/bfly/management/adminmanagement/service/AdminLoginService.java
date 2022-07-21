@@ -24,7 +24,7 @@ public class AdminLoginService extends AdminBaseService{
     @Autowired
     KeycloakService keycloakService;
 
-	public ApiResult<HashMap<String, Object>> login(AdminLoginReqModel param) throws Exception
+	public ApiResult<HashMap<String, Object>> adminLogin(AdminLoginReqModel param) throws Exception
 	{
 
 		Enum<? extends EnumMapperType> responseCode = null;
@@ -33,23 +33,23 @@ public class AdminLoginService extends AdminBaseService{
 
 		HashMap<String, Object> loginMap = new HashMap<>();
 
-		HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
-		callParameter.put("p_id", param.getUsrId());
-		// p_id 제외한 나머지 param 값은 상관없음, sp 형식 맞추기 위해 공백 값 넣어줌
-        callParameter.put("p_rc",0);
-        callParameter.put("p_rm", "OK");
-		callParameter.put("p_pw", "");
-		callParameter.put("p_usr_nm", "");
-		callParameter.put("p_usr_tp", "");
+		// 아이디, 패스워드 공백 체크
+		if(param.getUsrId() == null || "".equals(param.getUsrId())){
+			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
+		}
 
-		result = this.slaveMapper.selectAdminLogin(callParameter);
+		if(param.getUsrPw() == null || "".equals(param.getUsrPw())){
+			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
+		}
+
+		result = this.slaveMapper.selectAdminLogin(param.getUsrId());
 
 		if( null == result ){ // 아이디에 대한 정보 가 없을시
 			return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
 		}else{
 			// Password 확인
-			if (!passwordEncoder.matches(param.getUsrPw(), (String)result.get("p_pw")))
+			if (!passwordEncoder.matches(param.getUsrPw(), (String)result.get("usr_pw")))
 			{
 				return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
 			}
@@ -57,19 +57,15 @@ public class AdminLoginService extends AdminBaseService{
 			// token 인증 추가 필요
 			HashMap<String, Object> resultToken = keycloakService.GenerateToken();
 			
-			loginMap.put("returnMsg", result.get("p_rm"));
-			loginMap.put("usrNm", result.get("p_usr_nm"));
-			loginMap.put("usrTp", result.get("p_usr_tp"));
+			loginMap.put("returnMsg", "OK");
+			loginMap.put("usrNm", result.get("usr_nm"));
+			loginMap.put("usrTp", result.get("usr_tp"));
+			loginMap.put("usrStatus", result.get("status"));
 			loginMap.put("accessToken", resultToken.get("access_token"));
 			loginMap.put("refreshToken", resultToken.get("refresh_token"));
-		}
 
-		int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
-            responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            responseCode = CommonCode.COMMON_SUCCESS;
-        }
+			responseCode = CommonCode.COMMON_SUCCESS;
+		}
 
 		return new ApiResult<HashMap<String, Object>>(responseCode, loginMap);
 

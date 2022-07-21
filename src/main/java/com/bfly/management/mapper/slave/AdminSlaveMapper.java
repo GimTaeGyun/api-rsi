@@ -10,10 +10,12 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface AdminSlaveMapper {
 
-    public HashMap<String, Object> selectAdminLogin(HashMap<String, Object> parameter);
+    public HashMap<String, Object> selectAdminLogin(@Param("p_id") String p_id);
     
     public String selectUser(HashMap<String, Object> parameter);
 
     public String selectUserPw(@Param("p_usr_id") String p_usr_id);
+
+    public String selectUserGroup(@Param("p_usr_grp_id") int p_usr_grp_id);
     
 }

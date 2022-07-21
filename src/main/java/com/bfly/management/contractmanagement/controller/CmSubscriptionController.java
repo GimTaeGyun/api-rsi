@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.contractmanagement.service.CmSubscriptionService;
-import com.bfly.management.customermanagement.service.LoginService;
+import com.bfly.management.customermanagement.service.CuLoginService;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.contractmanagement.master.CartUpdateReqModel;
 import com.bfly.management.model.contractmanagement.slave.CartReqModel;
@@ -25,7 +25,7 @@ public class CmSubscriptionController {
     CmSubscriptionService cmSubscriptionService;
 
 	@Autowired
-    LoginService loginService;
+    CuLoginService loginService;
 
 	/**
 	 * 장바구니 조회

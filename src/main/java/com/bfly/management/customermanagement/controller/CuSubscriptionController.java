@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.customermanagement.service.CuSubscriptionService;
-import com.bfly.management.customermanagement.service.LoginService;
+import com.bfly.management.customermanagement.service.CuLoginService;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
@@ -31,7 +31,7 @@ public class CuSubscriptionController {
     CuSubscriptionService cuSubscriptionService;
 
 	@Autowired
-    LoginService loginService;
+    CuLoginService loginService;
 
 	/**
 	 * 고객관리 로그인
@@ -43,7 +43,7 @@ public class CuSubscriptionController {
     @ApiOperation(value = "로그인", notes = "로그인")
 	@PostMapping("/customer/login")
 	public ApiResult<HashMap<String, Object>> login(HttpServletRequest request, @RequestBody LoginReqModel param) throws Exception {
-		return loginService.login(param);
+		return loginService.customerLogin(param);
 	}
 
 	/**

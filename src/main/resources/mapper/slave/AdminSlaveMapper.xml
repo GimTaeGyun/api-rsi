@@ -6,21 +6,22 @@
 <mapper namespace="com.bfly.management.mapper.slave.AdminSlaveMapper">
 
 	<!-- 어드민 로그인정보 -->
-	<select id="selectAdminLogin" parameterType="HashMap" resultType="HashMap">
-        CALL app.sp_chk_adm_login(
-            #{p_id}::VARCHAR,
-            #{p_rm}::VARCHAR, 
-            #{p_rc}::int2,
-            #{p_pw}::VARCHAR,
-            #{p_usr_nm}::VARCHAR,
-            #{p_usr_tp}::VARCHAR
-        )
+	<select id="selectAdminLogin" parameterType="String" resultType="HashMap">
+        SELECT A.usr_pw,A.usr_nm, A.usr_tp, A.status
+        FROM app.user as A
+        WHERE A.usr_id = #{p_id}
 	</select>
 
     <!-- 어드민 사용자 검색 -->
-    <select id="selectUser" parameterType="HashMap" resultType="String" >    
+    <select id="selectUser" parameterType="HashMap" resultType="String" >
         SELECT 
             app.fn_get_users(#{p_usrId}::varchar(64), #{p_usrName}::varchar(64), #{p_status}::smallint)
+    </select>
+
+    <!-- 어드민 사용자 그룹/사용자 리스트 -->
+    <select id="selectUserGroup" parameterType="Integer" resultType="String" >
+        SELECT 
+            app.fn_get_group_list(#{p_usr_grp_id})
     </select>
 
 </mapper>
