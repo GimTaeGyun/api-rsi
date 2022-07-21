@@ -93,7 +93,7 @@ public class EmailService extends BaseService {
         if ( redisResult == null){
             responseCode = CommonCode.COMMON_EMAIL_CHECK_FAIL;
         }else{
-            redisUtil.delete(param.getToken());
+            redisUtil.delete(param.getToken() +""+ param.getEmail());
             responseCode = CommonCode.COMMON_EMAIL_CHECK_SUCCESS;
         }
         return new ApiResult<String>(responseCode, result);
