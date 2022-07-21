@@ -5,17 +5,9 @@
 
 <mapper namespace="com.bfly.management.mapper.slave.CustomerSlaveMapper">
 
-
-
-    <select id="testQuery" resultType="String">
-
-        select version()
-
-    </select>
-
 	<!-- 로그인정보 -->
 	<select id="selectLogin" parameterType="HashMap" resultType="HashMap">
-        call cu.sp_chk_login(
+        CALL cu.sp_chk_login(
             #{p_id}::VARCHAR,
             #{p_rm}::VARCHAR, 
             #{p_rc}::int2,

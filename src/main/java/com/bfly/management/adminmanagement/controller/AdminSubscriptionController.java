@@ -3,6 +3,7 @@ package com.bfly.management.adminmanagement.controller;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.adminmanagement.service.AdminLoginService;
-import com.bfly.management.contractmanagement.service.CmSubscriptionService;
+import com.bfly.management.adminmanagement.service.AdminSubscriptionService;
+import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
+import com.bfly.management.model.adminmanagement.master.UserDeleteReqModel;
+import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 
 import io.swagger.annotations.Api;
@@ -23,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value="/subscription", produces = { "application/json" })
 public class AdminSubscriptionController {
     @Autowired
-    CmSubscriptionService cmSubscriptionService;
+    AdminSubscriptionService adminSubscriptionService;
 
 	@Autowired
     AdminLoginService loginService;
@@ -41,19 +46,59 @@ public class AdminSubscriptionController {
 		return loginService.login(param);
 	}
 
-	// /**
-	//  * 사용자 추가, 수정, 삭제
-	//  * @param request
-	//  * @param param
-	//  * @return
-	//  * @throws Exception
-	//  */
-    // @ApiOperation(value = "사용자 추가, 수정, 삭제", notes = "사용자 추가, 수정, 삭제")
-	// @PostMapping("/admin/cart/update")
-	// public ApiResult<?> setCartInfo(@Valid @RequestBody CartUpdateReqModel param) throws Exception {
-	// 	return cmSubscriptionService.setCartInfo(param);
-	// }
+	/**
+	 * 사용자 추가, 수정
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 추가, 수정", notes = "사용자 추가, 수정")
+	@PostMapping("/admin/user/update")
+	public ApiResult<?> setUser(@Valid @RequestBody UserUpdateReqModel param) throws Exception {
+		return adminSubscriptionService.setUser(param);
+	}
 
+	/**
+	 * 사용자 삭제
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 삭제", notes = "사용자 삭제")
+	@PostMapping("/admin/user/delete")
+	public ApiResult<?> delUser(@Valid @RequestBody UserDeleteReqModel param) throws Exception {
+		return adminSubscriptionService.delUser(param);
+	}
+
+	/**
+	 * 사용자 검색
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 검색", notes = "사용자 검색")
+	@PostMapping("/admin/user/select")
+	public ApiResult<?> selectUser(@Valid @RequestBody UserReqModel param) throws Exception {
+		return adminSubscriptionService.selectUser(param);
+	}
+
+	/**
+	 * 사용자 비밀번호 변경
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 비밀번호 변경", notes = "사용자 비밀번호 변경")
+	@PostMapping("/admin/userpw/update")
+	public ApiResult<?> changeUserPw(@Valid @RequestBody UserChangePwReqModel param) throws Exception {
+		return adminSubscriptionService.changeUserPw(param);
+	}
+
+	
 	
 
 }

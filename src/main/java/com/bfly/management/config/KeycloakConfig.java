@@ -34,6 +34,7 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/subscription/customer/login").permitAll() // 허용
                 .antMatchers("/subscription/customer/signup").permitAll() // 허용
                 .antMatchers("/subscription/customer/check").permitAll() // 허용
+                .antMatchers("/subscription/admin/login").permitAll() // 허용
                 .antMatchers("/test/permitAll").permitAll() // 허용
                 .antMatchers("/product/createtoken").permitAll() // 허용
                 .antMatchers("/manager/**").authenticated() // 인증필요
