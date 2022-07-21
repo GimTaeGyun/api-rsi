@@ -19,7 +19,7 @@ pipeline {
         EXEC_CMD = 'sudo systemctl restart api-management.service'
         SOURCE_FILES = 'build/libs/*jar' //SSH TRANSFER 전송할 파일
         REMOVE_PREFIX = 'build/libs' //SSH TRANSFER 전송할 파일에서 삭제할 경로가 있다면 작성
-        REMOTE_DIRECTORY = '/management' //SSH TRANSFER 원격 서버 저장 경로(공백: default 경로)
+        REMOTE_DIRECTORY = '' //SSH TRANSFER 원격 서버 저장 경로(공백: default 경로)
         CLEAR_CMD = 'rm -rf ./*'
     }
 
