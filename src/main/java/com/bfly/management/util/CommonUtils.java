@@ -1,9 +1,13 @@
 package com.bfly.management.util;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -13,6 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.codec.binary.Base64;
 
 public class CommonUtils {
 
@@ -130,4 +136,6 @@ public class CommonUtils {
 	public static boolean isTel(String tel) {
 		return tel.matches("(01[016789])(\\d{3,4})(\\d{4})");
 	}
+
+	
 }

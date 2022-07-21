@@ -5,12 +5,15 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.customermanagement.service.EmailService;
 import com.bfly.management.model.common.ApiResult;
+import com.bfly.management.model.customermanagement.slave.EmailAuthCheckReqModel;
+import com.bfly.management.model.customermanagement.slave.EmailAuthReqModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +50,7 @@ public class EmailController {
 	 */
     @ApiOperation(value = "이메일 인증", notes = "이메일 인증")
 	@PostMapping("/authenticate")
-	public ApiResult<?> emailAuthenticate(HttpServletRequest request, @RequestParam @NotBlank(message = "param값은 필수입니다.") String param) throws Exception {
+	public ApiResult<?> emailAuthenticate(HttpServletRequest request, @RequestBody @NotBlank(message = "param값은 필수입니다.") EmailAuthReqModel param) throws Exception {
 		return emailService.emailAuthenticate(param);
 	}
 
@@ -60,7 +63,7 @@ public class EmailController {
 	 */
     @ApiOperation(value = "이메일 인증 확인", notes = "이메일 인증 확인")
 	@PostMapping("/check/authenticate")
-	public ApiResult<?> checkAuthenticate(HttpServletRequest request, @RequestParam @NotBlank(message = "param값은 필수입니다.") String param) throws Exception {
+	public ApiResult<?> checkAuthenticate(HttpServletRequest request, @RequestBody @NotBlank(message = "param값은 필수입니다.") EmailAuthCheckReqModel param) throws Exception {
 		return emailService.checkAuthenticate(param);
 	}
 }
