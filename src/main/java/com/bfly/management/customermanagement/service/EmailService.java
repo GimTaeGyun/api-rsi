@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class EmailService extends BaseService {
+
+    @Value("${customvalues.mail.logoUrl}")
+    private String logoUrl;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -83,7 +87,7 @@ public class EmailService extends BaseService {
         String subject = "Bflysoft 인증 메일 입니다.";
         String text = "";
 
-        String imageString = getByteArrayFromImageURL("http://125.141.143.200:8182/iiif/3/logo__logo.jpg/full/max/0/default.jpg");
+        String imageString = getByteArrayFromImageURL(logoUrl);
         text += "<div style=\"max-width: 600px; margin: 0 auto;\">";
         text += "<img width=\"120\" height=\"36\" style=\"margin-top: 0; margin-right: 0; margin-bottom: 32px; margin-left: 0px; padding-right: 30px; padding-left: 30px;\" src=\""+imageString+"\" alt=\"\">";
         text += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
@@ -105,7 +109,7 @@ public class EmailService extends BaseService {
         helper.setTo(email);
         helper.setSubject(subject);
         helper.setText(text, true);
-        helper.setFrom("bflysoft@bflysoft.com");
+        helper.setFrom("support@bflysoft.com");
         javaMailSender.send(mimeMessage);
         
         redisUtil.setData(authKey + "" + email, (Object)email, 60*5);

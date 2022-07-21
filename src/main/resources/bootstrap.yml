@@ -5,25 +5,7 @@ spring:
       active: dev
   application:
     name: management
-
-  mail:
-    host: mail.bflysoft.kr
-    port: 25
-    username: bflysoft
-    password: bflysoft7714
-    transport:
-      protocol: IMAP
-    debug: true
-    properties:
-      mail:
-        smtp:
-          starttls:
-            enable: true
-          auth: true
-          connectiontimeout: 5000
-          timeout: 5000
-          writetimeout: 5000
-  
+      
   cloud:
     config:
       uri: http://config:8888
