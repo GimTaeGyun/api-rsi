@@ -41,6 +41,7 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/keycloak/createUser").hasRole("ADMIN") // 인증필요
                 .antMatchers("/keycloak/deleteUser").hasRole("ADMIN") // 인증필요
                 .antMatchers("/keycloak/createtoken").permitAll() // 허용
+                .antMatchers("/customer/email/**").permitAll() // 허용
 
                 .anyRequest()
                 .permitAll();

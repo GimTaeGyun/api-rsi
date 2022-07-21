@@ -13,7 +13,9 @@ public enum CommonCode implements EnumMapperType {
 	COMMON_LOGIN_EXPIRED_CTRT("0903", "해당 계정은 계약기간이 만료되었습니다."),
 	COMMON_PWD_COMPARE_INVALID("0904", "새 비밀번호와 확인 비밀번호값이 틀립니다."),
 	COMMON_ID_CASE_INVALID("0905", "아이디에 대문자가 포함되어 있습니다."),
-	COMMON_FAIL("0999", "실패");
+	COMMON_FAIL("0999", "실패"),
+	COMMON_EMAIL_CHECK_FAIL("0800","유효하지 않은 이메일 인증 코드입니다."),
+	COMMON_EMAIL_CHECK_SUCCESS("0000","이메일 인증이 성공하였습니다.");
 
 	private String code;
 	private String msg;
