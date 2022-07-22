@@ -6,7 +6,7 @@ import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.common.EnumMapperType;
-import com.bfly.management.model.customermanagement.slave.LoginReqModel;
+import com.bfly.management.model.keycloakmanagement.KeycloakCreateTokenReqModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,8 @@ public class AdminLoginService extends AdminBaseService{
 
 	public ApiResult<HashMap<String, Object>> adminLogin(AdminLoginReqModel param) throws Exception
 	{
+
+		KeycloakCreateTokenReqModel keycloakParam = new KeycloakCreateTokenReqModel();
 
 		Enum<? extends EnumMapperType> responseCode = null;
 
@@ -54,8 +56,9 @@ public class AdminLoginService extends AdminBaseService{
 				return new ApiResult<HashMap<String, Object>>(CommonCode.COMMON_LOGIN_NOT_VALID_ID_PASSWORD, null);
 			}
 
+			keycloakParam.setUserId(param.getUsrId());
 			// token 인증 추가 필요
-			HashMap<String, Object> resultToken = keycloakService.GenerateToken();
+			HashMap<String, Object> resultToken = keycloakService.GenerateToken(keycloakParam);
 			
 			loginMap.put("returnMsg", "OK");
 			loginMap.put("usrNm", result.get("usr_nm"));

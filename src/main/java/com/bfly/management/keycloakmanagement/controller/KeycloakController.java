@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bfly.management.keycloakmanagement.service.KeycloakService;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreateUserReqModel;
-import com.bfly.management.model.keycloakmanagement.KeycloakCreteTokenReqModel;
+import com.bfly.management.model.keycloakmanagement.KeycloakCreateTokenReqModel;
 import com.bfly.management.model.keycloakmanagement.KeycloakRefreshTokenReqModel;
 
 import io.swagger.annotations.Api;
@@ -25,7 +25,7 @@ public class KeycloakController {
     KeycloakService keycloakService;
 
     @PostMapping("/createtoken")
-    public HashMap<String, Object> generateToken(@RequestBody KeycloakCreteTokenReqModel param) throws Exception{
+    public HashMap<String, Object> generateToken(@RequestBody KeycloakCreateTokenReqModel param) throws Exception{
         return keycloakService.GenerateToken(param);
     }
 	

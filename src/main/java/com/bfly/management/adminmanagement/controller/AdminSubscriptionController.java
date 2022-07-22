@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bfly.management.adminmanagement.service.AdminLoginService;
 import com.bfly.management.adminmanagement.service.AdminSubscriptionService;
 import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
-import com.bfly.management.model.adminmanagement.master.UserDeleteReqModel;
+import com.bfly.management.model.adminmanagement.master.UserDelMoveReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
+import com.bfly.management.model.adminmanagement.slave.AdminCheckDupIdReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
+import com.bfly.management.model.adminmanagement.slave.MenuReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserGroupUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 
@@ -61,16 +64,16 @@ public class AdminSubscriptionController {
 	}
 
 	/**
-	 * 사용자 삭제
+	 * 사용자 삭제/이동
 	 * @param request
 	 * @param param
 	 * @return
 	 * @throws Exception
 	 */
-    @ApiOperation(value = "사용자 삭제", notes = "사용자 삭제")
+    @ApiOperation(value = "사용자 삭제/이동", notes = "사용자 삭제/이동")
 	@PostMapping("/admin/user/delete")
-	public ApiResult<?> delUser(@Valid @RequestBody UserDeleteReqModel param) throws Exception {
-		return adminSubscriptionService.delUser(param);
+	public ApiResult<?> delMoveUser(@Valid @RequestBody UserDelMoveReqModel param) throws Exception {
+		return adminSubscriptionService.delMoveUser(param);
 	}
 
 	/**
@@ -87,15 +90,15 @@ public class AdminSubscriptionController {
 	}
 
 	/**
-	 * 사용자 그룹 검색
+	 * 사용자 그룹 추가/생성/삭제
 	 * @param request
 	 * @param param
 	 * @return
 	 * @throws Exception
 	 */
-    @ApiOperation(value = "사용자 그룹 검색", notes = "사용자 그룹 검색")
-	@PostMapping("/admin/usergroup/inquiry")
-	public ApiResult<?> selectUserGroup(@Valid @RequestBody UserGroupReqModel param) throws Exception {
+    @ApiOperation(value = "사용자 그룹 추가/생성/삭제", notes = "사용자 그룹 추가/생성/삭제")
+	@PostMapping("/admin/usergroup/update")
+	public ApiResult<?> selectUserGroup(@Valid @RequestBody UserGroupUpdateReqModel param) throws Exception {
 		return adminSubscriptionService.selectUserGroup(param);
 	}
 
@@ -112,7 +115,30 @@ public class AdminSubscriptionController {
 		return adminSubscriptionService.changeUserPw(param);
 	}
 
-	
-	
+	/**
+	 * 메뉴리스트 및 페이지리스트 조회
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "메뉴리스트 및 페이지리스트 조회", notes = "메뉴리스트 및 페이지리스트 조회")
+	@PostMapping("/admin/menu/inquiry")
+	public ApiResult<?> selectMenu(@Valid @RequestBody MenuReqModel param) throws Exception {
+		return adminSubscriptionService.selectMenu(param);
+	}
+
+	/**
+	 * 어드민 - 사용자 아이디 중복 확인
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 아이디 중복 확인", notes = "사용자 아이디 중복 확인")
+	@PostMapping("/admin/user/chkDupId")
+	public ApiResult<?> checkDupId(@Valid @RequestBody AdminCheckDupIdReqModel param) throws Exception {
+		return adminSubscriptionService.checkDupId(param);
+	}
 
 }

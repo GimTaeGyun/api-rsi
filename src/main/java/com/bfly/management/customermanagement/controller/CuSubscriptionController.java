@@ -18,7 +18,6 @@ import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
 import com.bfly.management.model.customermanagement.slave.LoginReqModel;
-import com.bfly.management.model.customermanagement.slave.PasswordCheckModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

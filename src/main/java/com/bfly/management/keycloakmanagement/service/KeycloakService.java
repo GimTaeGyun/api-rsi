@@ -33,16 +33,12 @@ import com.bfly.management.model.common.ApiCode;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreateUserReqModel;
-import com.bfly.management.model.keycloakmanagement.KeycloakCreteTokenReqModel;
+import com.bfly.management.model.keycloakmanagement.KeycloakCreateTokenReqModel;
 import com.bfly.management.model.keycloakmanagement.KeycloakRefreshTokenReqModel;
 
 import lombok.extern.slf4j.Slf4j;
 
 
-
-/**
- * 
- */
 @Slf4j
 @Service
 public class KeycloakService extends KeycloakBaseService{
@@ -53,28 +49,46 @@ public class KeycloakService extends KeycloakBaseService{
     @Value("${keycloak.auth-server-url}")
     private String authServerUrl;
 
+    @Value("${keycloak.realm}")
+    private String realm;
+
+    @Value("${keycloak.resource}")
+    private String clientId;
+
+    @Value("${keycloak.credentials.secret}")
+    private String clientSecret;
+
+    @Value("${customvalues.keycloak.adminId}")
+    private String adminId;
+
+    @Value("${customvalues.keycloak.adminPw}")
+    private String adminPw;
+
+    @Value("${customvalues.keycloak.userPw}")
+    private String userPw;
+
 
     public KeycloakCreateUserReqModel createUser(KeycloakCreateUserReqModel param) {
 
         Keycloak keycloak = new CustomKeycloak(
-                param.getAuthServerUrl(),   // 인증 URL
-                param.getRealm(),           // Realm 이름
-                param.getClientId(),        // Client ID
-                param.getClientSecret(),    // Client Credential
-                param.getAdminId(),         // 관리자 ID
-                param.getAdminPw() 
+                authServerUrl,   // 인증 URL
+                realm,           // Realm 이름
+                clientId,        // Client ID
+                clientSecret,    // Client Credential
+                adminId,         // 관리자 ID
+                adminPw 
         ).getKeycloak();
     
         UserRepresentation user = new UserRepresentation();
         user.setEnabled(true);
         user.setUsername(param.getUserId());
-        user.setFirstName(param.getUserId());
-        user.setLastName(param.getUserId());
-        user.setEmail(param.getUserId());
+        user.setFirstName(param.getUserNm());
+        user.setLastName(param.getUserNm());
+        user.setEmail(param.getEmail());
         user.setAttributes(Collections.singletonMap("origin", Arrays.asList("demo")));
 
         // Get realm
-        RealmResource realmResource = keycloak.realm(param.getRealm());
+        RealmResource realmResource = keycloak.realm(realm);
         UsersResource usersRessource = realmResource.users();
 
         // Create user (requires manage-users role)
@@ -89,7 +103,7 @@ public class KeycloakService extends KeycloakBaseService{
         CredentialRepresentation passwordCred = new CredentialRepresentation();
         passwordCred.setTemporary(false);
         passwordCred.setType(CredentialRepresentation.PASSWORD);
-        passwordCred.setValue(param.getUserPw());
+        passwordCred.setValue(userPw);
 
         UserResource userResource = usersRessource.get(userId);
 
@@ -106,7 +120,7 @@ public class KeycloakService extends KeycloakBaseService{
 //
 //        // Get client
         ClientRepresentation app1Client = realmResource.clients() //
-                .findByClientId(param.getClientId()).get(0);
+                .findByClientId(clientId).get(0);
 
 //        // Get client level role (requires view-clients role)
         RoleRepresentation userClientRole = realmResource.clients().get(app1Client.getId()) //
@@ -121,53 +135,18 @@ public class KeycloakService extends KeycloakBaseService{
     
         return param;
     }
-
-
-    public HashMap<String, Object> GenerateToken(KeycloakCreteTokenReqModel param) throws Exception
+    
+    public HashMap<String, Object> GenerateToken(KeycloakCreateTokenReqModel param) throws Exception
     {
         HashMap<String, Object> hm = new HashMap<String, Object>();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String uri = String.format(tokenUrl, param.getRealm());
+        String uri = String.format(tokenUrl, realm);
 
-        params.add("client_id", param.getClientId());
+        params.add("client_id", clientId);
         params.add("username", param.getUserId());
         params.add("grant_type", "password");
-        params.add("password", "Pa$$w0rd");
-        params.add("client_secret", param.getClientSecret());
-
-        String result = "";
-        
-        try{
-        result = WebClient.create()
-            .post()
-            .uri(uri)
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .body(BodyInserters.fromFormData(params))
-            .exchange()
-            .block()
-            .bodyToMono(String.class)
-            .block();
-
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new BusinessException(ApiCode.API_TOKEN_CREATE_FAIL);
-        }
-        hm = objectMapper.readValue(result, HashMap.class);
-        return hm;
-    }
-
-    
-    public HashMap<String, Object> GenerateToken() throws Exception
-    {
-        HashMap<String, Object> hm = new HashMap<String, Object>();
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String uri = String.format(tokenUrl, "ManageMentAPI");
-
-        params.add("client_id", "ApplicationClient");
-        params.add("username", "bflysoft");
-        params.add("grant_type", "password");
-        params.add("password", "Pa$$w0rd");
-        params.add("client_secret", "2bEioqNZ5snuOcf7QOHkzKkrfhk9tgH1");
+        params.add("password", userPw);
+        params.add("client_secret", clientSecret);
 
         String result = "";
         
@@ -201,18 +180,18 @@ public class KeycloakService extends KeycloakBaseService{
 
     public ApiResult<?> deleteUser(KeycloakCreateUserReqModel param) {
         Keycloak keycloak = new CustomKeycloak(
-        param.getAuthServerUrl(),   // 인증 URL
-        param.getRealm(),           // Realm 이름
-        param.getClientId(),        // Client ID
-        param.getClientSecret(),    // Client Credential
-        param.getAdminId(),         // 관리자 ID
-        param.getAdminPw() 
+            authServerUrl,   // 인증 URL
+            realm,           // Realm 이름
+            clientId,        // Client ID
+            clientSecret,    // Client Credential
+            adminId,         // 관리자 ID
+            adminPw 
         ).getKeycloak();
 
-        RealmResource realmResource = keycloak.realm(param.getRealm());
+        RealmResource realmResource = keycloak.realm(realm);
         UsersResource usersRessource = realmResource.users();
         
-        List<UserRepresentation> user = findUser(keycloak, usersRessource, param.getUserId(), param.getRealm());
+        List<UserRepresentation> user = findUser(keycloak, usersRessource, param.getUserId(), realm);
 
         if ( user.size() == 1 ) {
             usersRessource.get(user.get(0).getId()).remove();
@@ -227,10 +206,10 @@ public class KeycloakService extends KeycloakBaseService{
         HashMap<String, Object> hm = new HashMap<String, Object>();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         
-        String uri = String.format(tokenUrl, param.getRealm());
+        String uri = String.format(tokenUrl, realm);
 
-        params.add("client_id", param.getClientId());
-        params.add("client_secret", param.getClientSecret());
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
         params.add("refresh_token", param.getRefreshToken());
         params.add("grant_type", "refresh_token");
 

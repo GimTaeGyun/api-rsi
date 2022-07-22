@@ -18,4 +18,8 @@ public interface AdminSlaveMapper {
 
     public String selectUserGroup(@Param("p_usr_grp_id") int p_usr_grp_id);
     
+    public String selectMenu(HashMap<String, Object> parameter);
+
+    public int checkDupId(@Param("p_usr_id") String p_usr_id);
+
 }

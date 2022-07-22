@@ -7,9 +7,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
-import com.bfly.management.model.adminmanagement.master.UserDeleteReqModel;
+import com.bfly.management.model.adminmanagement.master.UserDelMoveReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
+import com.bfly.management.model.adminmanagement.slave.AdminCheckDupIdReqModel;
+import com.bfly.management.model.adminmanagement.slave.MenuReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserGroupUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
@@ -50,8 +53,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         return new ApiResult<Object>(responseCode, resultArray);
     }
 
-    public ApiResult<?> delUser(UserDeleteReqModel param) throws Exception {
-        
+    public ApiResult<?> delMoveUser(UserDelMoveReqModel param) throws Exception {
         
         Enum<? extends EnumMapperType> responseCode = null;
 
@@ -64,7 +66,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         callParameter.put("p_rc",0);
         callParameter.put("p_rm", "OK");
         
-        result = this.masterMapper.delUser(callParameter);
+        result = this.masterMapper.delMoveUser(callParameter);
         
         int rc = (int)result.get("p_rc");
         if (result == null || rc == 255 ) {
@@ -101,19 +103,24 @@ public class AdminSubscriptionService extends AdminBaseService{
         return new ApiResult<Object>(responseCode, resultArray);
     }
 
-    public ApiResult<?> selectUserGroup(UserGroupReqModel param) throws Exception {
+    public ApiResult<?> selectUserGroup(UserGroupUpdateReqModel param) throws Exception {
         
-        String result = null;
+        HashMap<String, Object> result = null;
         Enum<? extends EnumMapperType> responseCode = null;
-        // ArrayList<Object> resultArray = new ArrayList<Object>();
         HashMap<String, Object> resultArray = new HashMap<String, Object>();
 
-        result = this.slaveMapper.selectUserGroup(Integer.parseInt(param.getUsrGrpId()));
+        HashMap<String, Object> callParameter = new HashMap<String, Object>();
+
+        callParameter.put("p_params", objectMapper.writeValueAsString(param));
+        callParameter.put("p_rc",0);
+        callParameter.put("p_rm", "OK");
+
+        result = this.masterMapper.setUserGroup(callParameter);
         
         if (result == null) {
             responseCode = CommonCode.COMMON_FAIL;
         }else{
-            resultArray = objectMapper.readValue(result, HashMap.class);
+            // resultArray = objectMapper.readValue(result, HashMap.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         
@@ -143,4 +150,71 @@ public class AdminSubscriptionService extends AdminBaseService{
         return new ApiResult<Object>(responseCode, null);
     }
 
+    public ApiResult<?> selectUserGroup(UserReqModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        ArrayList<Object> resultArray = new ArrayList<Object>();
+
+		HashMap<String, Object> callParameter = new HashMap<String, Object>();
+
+		callParameter.put("p_usrId", param.getUsrId());
+        callParameter.put("p_usrName",param.getUsrNm());
+        callParameter.put("p_status", param.getStatus());
+
+        result = this.slaveMapper.selectUser(callParameter);
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        }else{
+            resultArray = objectMapper.readValue(result, ArrayList.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> selectMenu(MenuReqModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+
+        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+
+		HashMap<String, Object> callParameter = new HashMap<String, Object>();
+        
+		callParameter.put("p_app_id", param.getAppId());
+        callParameter.put("p_menu_id",param.getMenuId());
+        callParameter.put("p_usr_id", param.getUsrId());
+
+        result = this.slaveMapper.selectMenu(callParameter);
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        }else{
+            resultArray = objectMapper.readValue(result, HashMap.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> checkDupId(AdminCheckDupIdReqModel param) throws Exception {
+        
+        int result = 0;
+        Enum<? extends EnumMapperType> responseCode = null;
+
+        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+
+        result = this.slaveMapper.checkDupId(param.getUsrId());
+        
+        // 0보다 크면 중복 아이디 존재
+        if (result > 0) {
+            responseCode = CommonCode.COMMON_FAIL;
+        }else{
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
 }

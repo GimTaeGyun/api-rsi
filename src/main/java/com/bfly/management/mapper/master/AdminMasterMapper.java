@@ -11,7 +11,9 @@ public interface AdminMasterMapper {
     
     public HashMap<String, Object> setUser(HashMap<String, Object> parameter);
 
-    public HashMap<String, Object> delUser(HashMap<String, Object> parameter);
+    public HashMap<String, Object> delMoveUser(HashMap<String, Object> parameter);
 
     public int updateUserPw(HashMap<String, Object> parameter);
+
+    public HashMap<String, Object> setUserGroup(HashMap<String, Object> parameter);
 }

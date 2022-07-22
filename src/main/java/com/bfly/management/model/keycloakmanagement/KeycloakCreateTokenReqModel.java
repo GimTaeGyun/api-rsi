@@ -7,22 +7,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(description = "Refresh Token 발급 REQ")
-public class KeycloakRefreshTokenReqModel {
-
+@ApiModel(description = "Token 발급 REQ")
+public class KeycloakCreateTokenReqModel {
+    
+    @ApiModelProperty(notes = "User ID", example = "test")
+    private String userId;
+    
     // @ApiModelProperty(notes = "Realm Name", example = "ManageMentAPI")
     // private String realm;
 
     // @ApiModelProperty(notes = "Client ID", example = "ApplicationClient")
     // private String clientId;
 
-    // @ApiModelProperty(notes = "Client Secret", example = "2bEioqNZ5snuOcf7QOHkzKkrfhk9tgH1")
+    // @ApiModelProperty(notes = "Client Secret", example = "C83UaObpMgTl66o8eaCbeuL9y7qHCvhr")
     // private String clientSecret;
 
-    // @ApiModelProperty(notes = "Grant Type", example = "refresh_token")
-    // private String grantType;
-
-    @ApiModelProperty(notes = "Refresh Token", example = "")
-    private String refreshToken;
-
+    // @ApiModelProperty(notes = "Token Url", example = "http://192.168.10.198:8080/auth/realms/%s/protocol/openid-connect/token")
+    // private String tokenServerUrl;
 }
