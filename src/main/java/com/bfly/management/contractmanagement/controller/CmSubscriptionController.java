@@ -35,7 +35,7 @@ public class CmSubscriptionController {
 	 * @throws Exception
 	 */
     @ApiOperation(value = "장바구니 조회", notes = "장바구니 조회 ( p_cust_id : 고객ID )")
-	@PostMapping("/contract/cart")
+	@PostMapping("/contract/cart/inquiry")
 	public ApiResult<?> getCartInfo(@Valid @RequestBody CartReqModel param) throws Exception {
 		return cmSubscriptionService.getCartInfo(param);
 	}

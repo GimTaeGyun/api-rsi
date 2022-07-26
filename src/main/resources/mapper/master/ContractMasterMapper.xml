@@ -5,7 +5,7 @@
 
 <mapper namespace="com.bfly.management.mapper.master.ContractMasterMapper">
 
-    <!-- 어드민 - 사용자 추가/수정 -->
+    <!-- 장바구니 추가/수정/삭제  -->
     <select id="setCartInfo" parameterType="HashMap" resultType="HashMap">
         CALL cm.sp_mgt_cart_product(
             #{p_params}::json,

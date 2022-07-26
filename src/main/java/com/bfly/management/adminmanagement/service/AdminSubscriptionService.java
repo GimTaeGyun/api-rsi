@@ -24,13 +24,9 @@ public class AdminSubscriptionService extends AdminBaseService{
     public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ApiResult<?> setUser(UserUpdateReqModel param) throws Exception {
-        
-        
+                
         Enum<? extends EnumMapperType> responseCode = null;
-
         HashMap<String, Object> result = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -43,23 +39,20 @@ public class AdminSubscriptionService extends AdminBaseService{
         
         result = this.masterMapper.setUser(callParameter);
         
-        int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
+        int rc = (int) result.get("p_rc");
+        if ( result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
 
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, result);
     }
 
     public ApiResult<?> delMoveUser(UserDelMoveReqModel param) throws Exception {
         
         Enum<? extends EnumMapperType> responseCode = null;
-
         HashMap<String, Object> result = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
         callParameter.put("p_params", objectMapper.writeValueAsString(param));
@@ -68,14 +61,14 @@ public class AdminSubscriptionService extends AdminBaseService{
         
         result = this.masterMapper.delMoveUser(callParameter);
         
-        int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
+        int rc = (int) result.get("p_rc");
+        if ( result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
 
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, result);
     }
 
     public ApiResult<?> selectUser(UserReqModel param) throws Exception {
@@ -83,8 +76,6 @@ public class AdminSubscriptionService extends AdminBaseService{
         String result = null;
         Enum<? extends EnumMapperType> responseCode = null;
         ArrayList<Object> resultArray = new ArrayList<Object>();
-
-        
 		HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
 		callParameter.put("p_usrId", param.getUsrId());
@@ -95,7 +86,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         
         if (result == null) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             resultArray = objectMapper.readValue(result, ArrayList.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
@@ -107,8 +98,6 @@ public class AdminSubscriptionService extends AdminBaseService{
         
         HashMap<String, Object> result = null;
         Enum<? extends EnumMapperType> responseCode = null;
-        HashMap<String, Object> resultArray = new HashMap<String, Object>();
-
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
         callParameter.put("p_params", objectMapper.writeValueAsString(param));
@@ -117,31 +106,30 @@ public class AdminSubscriptionService extends AdminBaseService{
 
         result = this.masterMapper.setUserGroup(callParameter);
         
-        if (result == null) {
+        int rc = (int) result.get("p_rc");
+        if ( result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            // resultArray = objectMapper.readValue(result, HashMap.class);
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, result);
     }
 
     public ApiResult<?> changeUserPw(UserChangePwReqModel param) throws Exception {
         
         Enum<? extends EnumMapperType> responseCode = null;
-        
 		HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
 		callParameter.put("p_usrId", param.getUsrId());
 
+        // password encoding
         param.setUsrPw(passwordEncoder.encode(param.getUsrPw()));
-
 		callParameter.put("p_usrPw", param.getUsrPw());
 
         int cnt = this.masterMapper.updateUserPw(callParameter);
 
-        if (cnt > 0) {
+        if ( cnt > 0 ) {
             responseCode = CommonCode.COMMON_SUCCESS;
         } else {
             responseCode = CommonCode.COMMON_FAIL;
@@ -150,37 +138,11 @@ public class AdminSubscriptionService extends AdminBaseService{
         return new ApiResult<Object>(responseCode, null);
     }
 
-    public ApiResult<?> selectUserGroup(UserReqModel param) throws Exception {
-        
-        String result = null;
-        Enum<? extends EnumMapperType> responseCode = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
-		HashMap<String, Object> callParameter = new HashMap<String, Object>();
-
-		callParameter.put("p_usrId", param.getUsrId());
-        callParameter.put("p_usrName",param.getUsrNm());
-        callParameter.put("p_status", param.getStatus());
-
-        result = this.slaveMapper.selectUser(callParameter);
-        
-        if (result == null) {
-            responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            resultArray = objectMapper.readValue(result, ArrayList.class);
-            responseCode = CommonCode.COMMON_SUCCESS;
-        }
-        
-        return new ApiResult<Object>(responseCode, resultArray);
-    }
-
     public ApiResult<?> selectMenu(MenuReqModel param) throws Exception {
         
         String result = null;
         Enum<? extends EnumMapperType> responseCode = null;
-
         HashMap<String, Object> resultArray = new HashMap<String, Object>();
-
 		HashMap<String, Object> callParameter = new HashMap<String, Object>();
         
 		callParameter.put("p_app_id", param.getAppId());
@@ -189,9 +151,9 @@ public class AdminSubscriptionService extends AdminBaseService{
 
         result = this.slaveMapper.selectMenu(callParameter);
         
-        if (result == null) {
+        if ( result == null ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             resultArray = objectMapper.readValue(result, HashMap.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
@@ -204,17 +166,15 @@ public class AdminSubscriptionService extends AdminBaseService{
         int result = 0;
         Enum<? extends EnumMapperType> responseCode = null;
 
-        HashMap<String, Object> resultArray = new HashMap<String, Object>();
-
         result = this.slaveMapper.checkDupId(param.getUsrId());
         
         // 0보다 크면 중복 아이디 존재
         if (result > 0) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, null);
     }
 }

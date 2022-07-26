@@ -33,12 +33,8 @@ public class CmSubscriptionService extends ContractBaseService{
 
     public ApiResult<?> setCartInfo(CartUpdateReqModel param) throws Exception {
         
-        
         Enum<? extends EnumMapperType> responseCode = null;
-
         HashMap<String, Object> result = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
         callParameter.put("p_params", objectMapper.writeValueAsString(param));
@@ -47,14 +43,14 @@ public class CmSubscriptionService extends ContractBaseService{
         
         result = this.masterMapper.setCartInfo(callParameter);
         
-        int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
+        int rc = (int) result.get("p_rc");
+        if ( result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
 
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, result);
     }
 
 }

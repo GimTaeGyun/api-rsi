@@ -22,60 +22,71 @@ public class CuSubscriptionService extends BaseService{
     KeycloakService keycloakService;
 
     public ApiResult<?> createCustomer(CustomerInfoModel param) throws Exception {
-                
-        KeycloakCreateUserReqModel keycloaParam = new KeycloakCreateUserReqModel();
+
+        // db transaction start
+        this.masterMapper.startTransaction();
 
         Enum<? extends EnumMapperType> responseCode = null;
-
-        HashMap<String, Object> result = null;
-        ArrayList<Object> resultArray = new ArrayList<Object>();
-
+        HashMap<String, Object> result = null;            
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
+        KeycloakCreateUserReqModel keycloaParam = new KeycloakCreateUserReqModel();
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        
-        String rawPw = param.getLoginPw();
 
-        param.setLoginPw(passwordEncoder.encode(param.getLoginPw()));
+        try {
 
-        callParameter.put("p_params", objectMapper.writeValueAsString(param));
-        callParameter.put("p_rc",0);
-        callParameter.put("p_rm", "OK");
-        
-        result = this.masterMapper.createCustomer(callParameter);
-        
-        int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
-            responseCode = CommonCode.COMMON_FAIL;
-        }else{
-            responseCode = CommonCode.COMMON_SUCCESS;
+            String rawPw = param.getLoginPw();
+
+            param.setLoginPw(passwordEncoder.encode(param.getLoginPw()));
+
+            callParameter.put("p_params", objectMapper.writeValueAsString(param));
+            callParameter.put("p_rc",0);
+            callParameter.put("p_rm", "OK");
             
-            // keycloak 유저 생성
-            keycloaParam.setUserId(param.getLoginId());
-            keycloaParam.setUserPw(rawPw);
-            keycloaParam.setUserNm(param.getCustNm());
-            keycloaParam.setRoles(keycloaParam.getRoles().USER);
-            keycloakService.createUser(keycloaParam);
-        }
+            result = this.masterMapper.createCustomer(callParameter);
+            
+            int rc = (int) result.get("p_rc");
+            if ( result == null || rc == 255 ) {
+                responseCode = CommonCode.COMMON_FAIL;
+            } else {                
+                // keycloak 유저 생성
+                keycloaParam.setUserId(param.getLoginId());
+                keycloaParam.setUserPw(rawPw);
+                keycloaParam.setUserNm(param.getCustNm());
+                // keycloak email 중복 방지위해 공백으로 set
+                keycloaParam.setEmail("");
+                keycloaParam.setRoles(keycloaParam.getRoles().USER);
+                keycloakService.createUser(keycloaParam);
 
-        return new ApiResult<Object>(responseCode, resultArray);
+                responseCode = CommonCode.COMMON_SUCCESS;
+            }
+
+        } catch (Exception e) {
+            this.masterMapper.rollback();
+            responseCode = CommonCode.COMMON_FAIL;
+        }            
+
+        this.masterMapper.commit();
+        responseCode = CommonCode.COMMON_SUCCESS;
+
+        return new ApiResult<Object>(responseCode, result);
     }
 
     public ApiResult<?> checkCustomer(CustomerCheckModel param) throws Exception {
+        
         Enum<? extends EnumMapperType> responseCode = null;
-
         HashMap<String, Object> result = null;
-
         HashMap<String, Object> callParameter = new HashMap<String, Object>();
 
         callParameter.put("p_params", objectMapper.writeValueAsString(param));
 
         result = this.slaveMapper.checkCustomer(callParameter);
 
-        int rc = (int)result.get("p_rc");
-        if (result == null || rc == 255 ) {
+        int rc = (int) result.get("p_rc");
+        if ( result == null || rc == 255 ) {
             responseCode = CommonCode.COMMON_FAIL;
-        }else{
+        } else {
             responseCode = CommonCode.COMMON_SUCCESS;
         }
 

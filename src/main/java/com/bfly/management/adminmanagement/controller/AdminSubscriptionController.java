@@ -136,7 +136,7 @@ public class AdminSubscriptionController {
 	 * @throws Exception
 	 */
     @ApiOperation(value = "사용자 아이디 중복 확인", notes = "사용자 아이디 중복 확인")
-	@PostMapping("/admin/user/chkDupId")
+	@PostMapping("/admin/userid/check")
 	public ApiResult<?> checkDupId(@Valid @RequestBody AdminCheckDupIdReqModel param) throws Exception {
 		return adminSubscriptionService.checkDupId(param);
 	}

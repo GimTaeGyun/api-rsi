@@ -5,6 +5,7 @@
 
 <mapper namespace="com.bfly.management.mapper.master.CustomerMasterMapper">
 
+    <!-- 고객 가입  -->
     <select id="createCustomer" parameterType="HashMap" resultType="HashMap">
         CALL cu.sp_add_customer(
             #{p_params}::json,
@@ -12,5 +13,15 @@
             #{p_rc}::int2
         )
     </select>
+
+    <select id="commit">
+		COMMIT
+	</select>
+	<select id="startTransaction">
+		START TRANSACTION
+	</select>
+	<select id="rollback">
+		ROLLBACK
+	</select>
 
 </mapper>

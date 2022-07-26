@@ -1,5 +1,7 @@
 package com.bfly.management.model.adminmanagement.slave;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,6 +20,9 @@ public class UserGroupUpdateReqModel {
 
     @ApiModelProperty(notes = "상위 사용자 그룹 (최상단 그룹일 경우 null)", example = "6", required = true)
     private String uppUsrGrpId;
+
+    @ApiModelProperty(notes = "사용자 그룹 역할", example = "[\"FINANCE\",\"SALES\"]", required = true)
+    private List<String> usrRoleId;
 
     @ApiModelProperty(notes = "사용자 그룹명", example = "영업1팀", required = true)
     private String usrGrpNm;
