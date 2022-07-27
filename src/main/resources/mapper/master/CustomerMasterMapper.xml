@@ -14,6 +14,24 @@
         )
     </select>
 
+    <!-- 고객 사용자 그룹 추가/수정/삭제  -->
+    <select id="setCustUserGroup" parameterType="HashMap" resultType="HashMap">
+        CALL cu.sp_mgt_user_group(
+            #{p_params}::json,
+            #{p_rm}::VARCHAR,
+            #{p_rc}::smallint
+        )
+    </select>
+
+    <!-- 고객 사용자 추가/수정/삭제  -->
+    <select id="setCustUser" parameterType="HashMap" resultType="HashMap">
+        CALL cu.sp_mgt_user(
+            #{p_params}::json,
+            #{p_rm}::VARCHAR,
+            #{p_rc}::smallint
+        )
+    </select>
+    
     <select id="commit">
 		COMMIT
 	</select>

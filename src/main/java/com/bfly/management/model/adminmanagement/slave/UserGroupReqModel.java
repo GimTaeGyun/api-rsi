@@ -9,22 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(description = "사용자 그룹 조회 REQ")
+@ApiModel(description = "사용자 그룹 추가/수정/삭제 REQ")
 public class UserGroupReqModel {
     
-    @ApiModelProperty(notes = "action타입 (add: 추가, mod: 수정, del:삭제)", example = "add", required = true) 
-    private String action;
-
-    @ApiModelProperty(notes = "사용자 그룹 (생성시 null)", example = "", required = true) 
-    private List<Integer> usrGrpId;
-
-    @ApiModelProperty(notes = "상위 사용자 그룹 (최상단 그룹일 경우 null)", example = "", required = true) 
-    private String uppUsrGrpId;
-
-    @ApiModelProperty(notes = "사용자그룹명", example = "영업1팀", required = true) 
-    private String usrGrpNm;
-
-    @ApiModelProperty(notes = "사용자 그룹 설명", example = "설명칸 입니다.") 
-    private String description;
+    @ApiModelProperty(notes = "조회할 그룹아이디(전체 그룹 및 사용자 조회일 경우:1)", example = "2", required = true) 
+    private String usr_grp_id;
     
 }

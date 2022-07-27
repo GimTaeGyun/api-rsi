@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 public interface CustomerMasterMapper {
 
     public HashMap<String, Object> createCustomer(HashMap<String, Object> parameter);
+
+	public HashMap<String, Object> setCustUserGroup(HashMap<String, Object> parameter);
+
+	public HashMap<String, Object> setCustUser(HashMap<String, Object> parameter);
     
     /**
 	 * 트랜잭션 처리를 위한 함수 새로 정의

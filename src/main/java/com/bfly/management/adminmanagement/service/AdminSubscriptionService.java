@@ -94,7 +94,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         return new ApiResult<Object>(responseCode, resultArray);
     }
 
-    public ApiResult<?> selectUserGroup(UserGroupUpdateReqModel param) throws Exception {
+    public ApiResult<?> setUserGroup(UserGroupUpdateReqModel param) throws Exception {
         
         HashMap<String, Object> result = null;
         Enum<? extends EnumMapperType> responseCode = null;
@@ -150,6 +150,24 @@ public class AdminSubscriptionService extends AdminBaseService{
         callParameter.put("p_usr_id", param.getUsrId());
 
         result = this.slaveMapper.selectMenu(callParameter);
+        
+        if ( result == null ) {
+            responseCode = CommonCode.COMMON_FAIL;
+        } else {
+            resultArray = objectMapper.readValue(result, HashMap.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> selectUserGroup(UserGroupReqModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+
+        result = this.slaveMapper.selectUserGroup(Integer.parseInt(param.getUsr_grp_id()));
         
         if ( result == null ) {
             responseCode = CommonCode.COMMON_FAIL;

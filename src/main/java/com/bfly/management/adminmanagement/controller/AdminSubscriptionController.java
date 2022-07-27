@@ -83,10 +83,23 @@ public class AdminSubscriptionController {
 	 * @return
 	 * @throws Exception
 	 */
-    @ApiOperation(value = "사용자 검색", notes = "사용자 검색")
+    @ApiOperation(value = "사용자 검색", notes = "( p_usrId : 조회할 그룹아이디 )")
 	@PostMapping("/admin/user/inquiry")
 	public ApiResult<?> selectUser(@Valid @RequestBody UserReqModel param) throws Exception {
 		return adminSubscriptionService.selectUser(param);
+	}
+
+	/**
+	 * 사용자 그룹/사용자 리스트 조회
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자그룹/사용자 리스트 조회", notes = "( p_usr_grp : 조회할 그룹아이디 )")
+	@PostMapping("/admin/usergroup/inquiry")
+	public ApiResult<?> selectUserGroup(@Valid @RequestBody UserGroupReqModel param) throws Exception {
+		return adminSubscriptionService.selectUserGroup(param);
 	}
 
 	/**
@@ -98,8 +111,8 @@ public class AdminSubscriptionController {
 	 */
     @ApiOperation(value = "사용자 그룹 추가/생성/삭제", notes = "사용자 그룹 추가/생성/삭제")
 	@PostMapping("/admin/usergroup/update")
-	public ApiResult<?> selectUserGroup(@Valid @RequestBody UserGroupUpdateReqModel param) throws Exception {
-		return adminSubscriptionService.selectUserGroup(param);
+	public ApiResult<?> setUserGroup(@Valid @RequestBody UserGroupUpdateReqModel param) throws Exception {
+		return adminSubscriptionService.setUserGroup(param);
 	}
 
 	/**

@@ -16,6 +16,8 @@ import com.bfly.management.customermanagement.service.CuSubscriptionService;
 import com.bfly.management.customermanagement.service.CuLoginService;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
+import com.bfly.management.model.customermanagement.master.CustomerUserGroupModel;
+import com.bfly.management.model.customermanagement.master.CustomerUserModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
 import com.bfly.management.model.customermanagement.slave.LoginReqModel;
 
@@ -71,4 +73,31 @@ public class CuSubscriptionController {
 		return cuSubscriptionService.checkCustomer(param);
 	}
 
+	/**
+	 * 고객관리 사용자 그룹 추가/수정/삭제
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 그룹 추가/수정/삭제", notes = "사용자 그룹 추가/수정/삭제")
+	@PostMapping("/customer/usergroup/update")
+	public ApiResult<?> setCustUserGroup(@Valid @RequestBody CustomerUserGroupModel param) throws Exception {
+		return cuSubscriptionService.setCustUserGroup(param);
+	}
+
+	/**
+	 * 고객관리 사용자 추가/수정/삭제
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 추가/수정/삭제", notes = "사용자 추가/수정/삭제")
+	@PostMapping("/customer/user/update")
+	public ApiResult<?> setCustUser(@Valid @RequestBody CustomerUserModel param) throws Exception {
+		return cuSubscriptionService.setCustUser(param);
+	}
+
+	
 }
