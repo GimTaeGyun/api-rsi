@@ -142,7 +142,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         
         String result = null;
         Enum<? extends EnumMapperType> responseCode = null;
-        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+        ArrayList<Object> resultArray = new ArrayList<Object>();
 		HashMap<String, Object> callParameter = new HashMap<String, Object>();
         
 		callParameter.put("p_app_id", param.getAppId());
@@ -154,7 +154,7 @@ public class AdminSubscriptionService extends AdminBaseService{
         if ( result == null ) {
             responseCode = CommonCode.COMMON_FAIL;
         } else {
-            resultArray = objectMapper.readValue(result, HashMap.class);
+            resultArray = objectMapper.readValue(result, ArrayList.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         

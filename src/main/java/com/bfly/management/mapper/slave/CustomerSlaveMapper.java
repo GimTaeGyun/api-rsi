@@ -15,4 +15,8 @@ public interface CustomerSlaveMapper {
 
     public HashMap<String, Object> checkCustomer(HashMap<String, Object> parameter);
 
+    public String selectCustList(HashMap<String, Object> parameter);
+
+    public String selectCustDetailList(HashMap<String, Object> parameter);
+
 }

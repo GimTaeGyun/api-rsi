@@ -15,6 +15,8 @@ import com.bfly.management.model.customermanagement.master.CustomerInfoModel;
 import com.bfly.management.model.customermanagement.master.CustomerUserGroupModel;
 import com.bfly.management.model.customermanagement.master.CustomerUserModel;
 import com.bfly.management.model.customermanagement.slave.CustomerCheckModel;
+import com.bfly.management.model.customermanagement.slave.CustomerDetailListModel;
+import com.bfly.management.model.customermanagement.slave.CustomerListModel;
 import com.bfly.management.model.keycloakmanagement.KeycloakCreateUserReqModel;
 
 @Service
@@ -142,5 +144,47 @@ public class CuSubscriptionService extends BaseService{
 
         return new ApiResult<Object>(responseCode, result);
     }
-    
+
+    public ApiResult<?> selectCustList(CustomerListModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        ArrayList<Object> resultArray = new ArrayList<Object>();
+		HashMap<String, Object> callParameter = new HashMap<String, Object>();
+
+		callParameter.put("p_page", param.getPage());
+        callParameter.put("p_page_no",param.getPage_no());
+
+        result = this.slaveMapper.selectCustList(callParameter);
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        } else {
+            resultArray = objectMapper.readValue(result, ArrayList.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> selectCustDetailList(CustomerDetailListModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        ArrayList<Object> resultArray = new ArrayList<Object>();
+		HashMap<String, Object> callParameter = new HashMap<String, Object>();
+
+		callParameter.put("p_cust_id", param.getCust_id());
+
+        result = this.slaveMapper.selectCustDetailList(callParameter);
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        } else {
+            resultArray = objectMapper.readValue(result, ArrayList.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
 }
