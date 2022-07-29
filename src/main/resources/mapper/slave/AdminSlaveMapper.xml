@@ -18,6 +18,12 @@
             app.fn_get_users(#{p_usrId}::varchar(64), #{p_usrName}::varchar(64), #{p_status}::smallint)
     </select>
 
+    <!-- 어드민 사용자 상세 정보 조회 -->
+    <select id="selectUserInfo" parameterType="String" resultType="String" >
+        SELECT 
+            app.fn_get_usr_info(#{p_usr_id});
+    </select>
+
     <!-- 어드민 사용자 그룹/사용자 리스트 -->
     <select id="selectUserGroup" parameterType="Integer" resultType="String" >
         SELECT 

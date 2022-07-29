@@ -1,11 +1,13 @@
 package com.bfly.management.model.customermanagement.master;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel(description = "고객 사용자그룹 추가/수정/삭제 REQ")
 public class CustomerUserGroupModel {
     
     @ApiModelProperty(notes = "action type (add: 추가, mod: 수정, del:삭제)", example = "add", required = true) 

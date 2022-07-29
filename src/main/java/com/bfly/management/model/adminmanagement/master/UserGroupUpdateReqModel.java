@@ -1,4 +1,4 @@
-package com.bfly.management.model.adminmanagement.slave;
+package com.bfly.management.model.adminmanagement.master;
 
 import java.util.List;
 

@@ -2,12 +2,14 @@ package com.bfly.management.model.customermanagement.master;
 
 import com.bfly.management.model.productmanagement.master.PromotionModel;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel(description = "고객 가입 REQ")
 public class CustomerInfoModel {
     
     @ApiModelProperty(notes = "계약담당자명 (개인고객일 경우 고객명)", example = "지구소프트 개인", required = true) 

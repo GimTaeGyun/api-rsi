@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(description = "사용자 추가, 수정")
+@ApiModel(description = "사용자 추가/수정")
 public class UserUpdateReqModel {
 
     @ApiModelProperty(notes = "action타입 add(추가), mod(수정)", example = "add", required = true) 
@@ -39,4 +39,6 @@ public class UserUpdateReqModel {
     @ApiModelProperty(notes = "상태값 (활성화:1, 비활성화:0)", example = "1", required = true) 
     private int status;
 
+    @ApiModelProperty(notes = "사용자 설명", example = "사용자 설명입니다.") 
+    private String description;
 }

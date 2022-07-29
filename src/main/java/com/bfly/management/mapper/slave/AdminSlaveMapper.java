@@ -14,6 +14,8 @@ public interface AdminSlaveMapper {
     
     public String selectUser(HashMap<String, Object> parameter);
 
+    public String selectUserInfo(@Param("p_usr_id") String p_usr_id);
+
     public String selectUserPw(@Param("p_usr_id") String p_usr_id);
 
     public String selectUserGroup(@Param("p_usr_grp_id") int p_usr_grp_id);

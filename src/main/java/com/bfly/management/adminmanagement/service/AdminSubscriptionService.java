@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
 import com.bfly.management.model.adminmanagement.master.UserDelMoveReqModel;
+import com.bfly.management.model.adminmanagement.master.UserGroupUpdateReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminCheckDupIdReqModel;
 import com.bfly.management.model.adminmanagement.slave.MenuReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
-import com.bfly.management.model.adminmanagement.slave.UserGroupUpdateReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserInfoReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 import com.bfly.management.model.common.CommonCode;
@@ -88,6 +89,24 @@ public class AdminSubscriptionService extends AdminBaseService{
             responseCode = CommonCode.COMMON_FAIL;
         } else {
             resultArray = objectMapper.readValue(result, ArrayList.class);
+            responseCode = CommonCode.COMMON_SUCCESS;
+        }
+        
+        return new ApiResult<Object>(responseCode, resultArray);
+    }
+
+    public ApiResult<?> selectUserInfo(UserInfoReqModel param) throws Exception {
+        
+        String result = null;
+        Enum<? extends EnumMapperType> responseCode = null;
+        HashMap<String, Object> resultArray = new HashMap<String, Object>();
+
+        result = this.slaveMapper.selectUserInfo(param.getUsrId());
+        
+        if (result == null) {
+            responseCode = CommonCode.COMMON_FAIL;
+        } else {
+            resultArray = objectMapper.readValue(result, HashMap.class);
             responseCode = CommonCode.COMMON_SUCCESS;
         }
         

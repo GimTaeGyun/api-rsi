@@ -15,12 +15,13 @@ import com.bfly.management.adminmanagement.service.AdminLoginService;
 import com.bfly.management.adminmanagement.service.AdminSubscriptionService;
 import com.bfly.management.model.adminmanagement.master.UserChangePwReqModel;
 import com.bfly.management.model.adminmanagement.master.UserDelMoveReqModel;
+import com.bfly.management.model.adminmanagement.master.UserGroupUpdateReqModel;
 import com.bfly.management.model.adminmanagement.master.UserUpdateReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminCheckDupIdReqModel;
 import com.bfly.management.model.adminmanagement.slave.AdminLoginReqModel;
 import com.bfly.management.model.adminmanagement.slave.MenuReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserGroupReqModel;
-import com.bfly.management.model.adminmanagement.slave.UserGroupUpdateReqModel;
+import com.bfly.management.model.adminmanagement.slave.UserInfoReqModel;
 import com.bfly.management.model.adminmanagement.slave.UserReqModel;
 import com.bfly.management.model.common.ApiResult;
 
@@ -83,10 +84,23 @@ public class AdminSubscriptionController {
 	 * @return
 	 * @throws Exception
 	 */
-    @ApiOperation(value = "사용자 검색", notes = "( p_usrId : 조회할 그룹아이디 )")
+    @ApiOperation(value = "사용자 검색", notes = "사용자 검색")
 	@PostMapping("/admin/user/inquiry")
 	public ApiResult<?> selectUser(@Valid @RequestBody UserReqModel param) throws Exception {
 		return adminSubscriptionService.selectUser(param);
+	}
+
+	/**
+	 * 사용자 상세 정보
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+    @ApiOperation(value = "사용자 상세 정보", notes = "( p_usrId : 입력한 유저 아이디 )")
+	@PostMapping("/admin/userinfo/inquiry")
+	public ApiResult<?> selectUserInfo(@Valid @RequestBody UserInfoReqModel param) throws Exception {
+		return adminSubscriptionService.selectUserInfo(param);
 	}
 
 	/**
@@ -154,4 +168,5 @@ public class AdminSubscriptionController {
 		return adminSubscriptionService.checkDupId(param);
 	}
 
+	
 }
