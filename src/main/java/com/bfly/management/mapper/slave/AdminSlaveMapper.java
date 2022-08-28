@@ -1,5 +1,6 @@
 package com.bfly.management.mapper.slave;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -9,19 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface AdminSlaveMapper {
-
-    public HashMap<String, Object> selectAdminLogin(@Param("p_id") String p_id);
     
-    public String selectUser(HashMap<String, Object> parameter);
+    // public HashMap selectTest();
 
-    public String selectUserInfo(@Param("p_usr_id") String p_usr_id);
-
-    public String selectUserPw(@Param("p_usr_id") String p_usr_id);
-
-    public String selectUserGroup(@Param("p_usr_grp_id") int p_usr_grp_id);
-    
-    public String selectMenu(HashMap<String, Object> parameter);
-
-    public int checkDupId(@Param("p_usr_id") String p_usr_id);
+    public ArrayList<HashMap> selectCoin();
+    // public String selectCoin();
 
 }

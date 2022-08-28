@@ -6,40 +6,13 @@
 <mapper namespace="com.bfly.management.mapper.slave.AdminSlaveMapper">
 
 	<!-- 어드민 로그인정보 -->
-	<select id="selectAdminLogin" parameterType="String" resultType="HashMap">
-        SELECT A.usr_pw,A.usr_nm, A.usr_tp, A.status
-        FROM app.user as A
-        WHERE A.usr_id = #{p_id}
+	<select id="selectTest" resultType="String">
+        SELECT 1
 	</select>
 
-    <!-- 어드민 사용자 검색 -->
-    <select id="selectUser" parameterType="HashMap" resultType="String" >
-        SELECT 
-            app.fn_get_users(#{p_usrId}::varchar(64), #{p_usrName}::varchar(64), #{p_status}::smallint)
-    </select>
-
-    <!-- 어드민 사용자 상세 정보 조회 -->
-    <select id="selectUserInfo" parameterType="String" resultType="String" >
-        SELECT 
-            app.fn_get_usr_info(#{p_usr_id});
-    </select>
-
-    <!-- 어드민 사용자 그룹/사용자 리스트 -->
-    <select id="selectUserGroup" parameterType="Integer" resultType="String" >
-        SELECT 
-            app.fn_get_group_list(#{p_usr_grp_id})
-    </select>
-
-    <!-- 어드민 메뉴 리스트 및 페이지 리스트 -->
-    <select id="selectMenu" parameterType="HashMap" resultType="String" >
-        SELECT 
-            app.fn_get_menu(#{p_app_id}::smallint, #{p_menu_id}::int2, #{p_usr_id}::varchar(256))
-    </select>
-
-    <!-- 어드민 사용자 아이디 중복확인 -->
-    <select id="checkDupId" parameterType="HashMap" resultType="Integer" >
-        SELECT count(1) 
-        FROM app.user A where A.usr_id = #{p_usr_id}
-    </select>
+    <!-- 코인 정보 -->
+	<select id="selectCoin" resultType="hashmap">
+        SELECT * from greedfear_log limit 10
+	</select>
 
 </mapper>

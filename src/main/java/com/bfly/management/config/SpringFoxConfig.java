@@ -39,115 +39,29 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SuppressWarnings("unchecked")
 public class SpringFoxConfig {
 
-	@Value("${keycloak.auth-server-url}")
-    private String authServerUrl;
+	// @Value("${keycloak.auth-server-url}")
+    // private String authServerUrl;
   
-    @Value("${keycloak.realm}")
-    private String realm;
+    // @Value("${keycloak.realm}")
+    // private String realm;
   
-    @Value("${keycloak.resource}")
-    private String clientId;
+    // @Value("${keycloak.resource}")
+    // private String clientId;
   
-    @Value("${keycloak.credentials.secret}")
-    private String clientSecret;
+    // @Value("${keycloak.credentials.secret}")
+    // private String clientSecret;
 
-    @Value("${customvalues.keycloak.adminId}")
-    private String adminId;
+    // @Value("${customvalues.keycloak.adminId}")
+    // private String adminId;
 
-    @Value("${customvalues.keycloak.adminPw}")
-    private String adminPw;
+    // @Value("${customvalues.keycloak.adminPw}")
+    // private String adminPw;
 
-    @Value("${customvalues.keycloak.tokenUrl}")
-    private String tokenUrl;
+    // @Value("${customvalues.keycloak.tokenUrl}")
+    // private String tokenUrl;
 
-	@Value("${customvalues.keycloak.authUrl}")
-    private String authUrl;
-
-	@Bean
-	public Docket CreateDocketAdmin() {
-
-		List<Response> list = getGlobalResponse();
-		String title = "AdminManagement";
-
-		String desc = title + " API";
-		ApiInfo apiinfo = new ApiInfoBuilder()
-				.title(title)
-				.description(desc)
-				.build();
-
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName(title)
-				.securitySchemes(buildSecurityScheme())
-				.securityContexts(Arrays.asList(securityContext()))
-				.apiInfo(apiinfo)
-				.useDefaultResponseMessages(false)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.adminmanagement.controller"))
-				.paths(PathSelectors.ant("/**"))
-				.build()
-				.globalResponses(HttpMethod.GET, list)
-				.globalResponses(HttpMethod.PUT, list)
-				.globalResponses(HttpMethod.POST, list)
-				.globalResponses(HttpMethod.DELETE, list);
-
-	}
-	
-	@Bean
-	public Docket CreateDocketContract() {
-
-		List<Response> list = getGlobalResponse();
-		String title = "ContractManagement";
-
-		String desc = title + " API";
-		ApiInfo apiinfo = new ApiInfoBuilder()
-				.title(title)
-				.description(desc)
-				.build();
-
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName(title)
-				.securitySchemes(buildSecurityScheme())
-				.securityContexts(Arrays.asList(securityContext()))
-				.apiInfo(apiinfo)
-				.useDefaultResponseMessages(false)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.contractmanagement.controller"))
-				.paths(PathSelectors.ant("/**"))
-				.build()
-				.globalResponses(HttpMethod.GET, list)
-				.globalResponses(HttpMethod.PUT, list)
-				.globalResponses(HttpMethod.POST, list)
-				.globalResponses(HttpMethod.DELETE, list);
-
-	}
-
-	@Bean
-	public Docket CreateDocketCustomer() {
-
-		List<Response> list = getGlobalResponse();
-		String title = "CustomerManagement";
-
-		String desc = title + " API";
-		ApiInfo apiinfo = new ApiInfoBuilder()
-				.title(title)
-				.description(desc)
-				.build();
-
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName(title)
-				.securitySchemes(buildSecurityScheme())
-				.securityContexts(Arrays.asList(securityContext()))
-				.apiInfo(apiinfo)
-				.useDefaultResponseMessages(false)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.customermanagement.controller"))
-				.build()
-				.globalResponses(HttpMethod.GET, list)
-				.globalResponses(HttpMethod.PUT, list)
-				.globalResponses(HttpMethod.POST, list)
-				.globalResponses(HttpMethod.DELETE, list);
-
-	}
+	// @Value("${customvalues.keycloak.authUrl}")
+    // private String authUrl;
 
 	@Bean
 	public Docket CreateDocketProduct() {
@@ -166,10 +80,10 @@ public class SpringFoxConfig {
 				.apiInfo(apiinfo)
 				.useDefaultResponseMessages(false)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.productmanagement.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.rsiupbit.controller"))
 				.build()
-				.securitySchemes(buildSecurityScheme()).
-				securityContexts(Arrays.asList(securityContext()))
+				// .securitySchemes(buildSecurityScheme()).
+				// securityContexts(Arrays.asList(securityContext()))
 				.globalResponses(HttpMethod.GET, list)
 				.globalResponses(HttpMethod.PUT, list)
 				.globalResponses(HttpMethod.POST, list)
@@ -177,33 +91,6 @@ public class SpringFoxConfig {
 
 	}
 
-	@Bean
-	public Docket CreateDocketKeycloak() {
-
-		List<Response> list = getGlobalResponse();
-		String title = "SecurityManagement";
-
-		String desc = title + " API";
-		ApiInfo apiinfo = new ApiInfoBuilder()
-				.title(title)
-				.description(desc)
-				.build();
-
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName(title)
-				.apiInfo(apiinfo)
-				.useDefaultResponseMessages(false)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bfly.management.keycloakmanagement.controller"))
-				.build()
-				.securitySchemes(buildSecurityScheme())
-				.securityContexts(Arrays.asList(securityContext()))
-				.globalResponses(HttpMethod.GET, list)
-				.globalResponses(HttpMethod.PUT, list)
-				.globalResponses(HttpMethod.POST, list)
-				.globalResponses(HttpMethod.DELETE, list);
-
-	}
 
 	private List<Response> getGlobalResponse() {
 		List<Response> list = new ArrayList<Response>();
@@ -216,42 +103,42 @@ public class SpringFoxConfig {
 		return list;
 	}
 
-	@Bean
-	SecurityScheme oauthClientCredentialsLocal() {
-		GrantType grantType =
-                new AuthorizationCodeGrantBuilder()
-                        .tokenEndpoint(new TokenEndpoint(String.format(tokenUrl, realm), "swagger-dev"))
-                        .tokenRequestEndpoint(
-                                new TokenRequestEndpoint(String.format(authUrl, realm), clientId, clientSecret))
-                        .build();
-        SecurityScheme oauth =
-                new OAuthBuilder()
-                        .name("spring_oauth")
-                        .grantTypes(Arrays.asList(grantType))
-                        .build();
-        return oauth;
-	}
+	// @Bean
+	// SecurityScheme oauthClientCredentialsLocal() {
+	// 	GrantType grantType =
+    //             new AuthorizationCodeGrantBuilder()
+    //                     .tokenEndpoint(new TokenEndpoint(String.format(tokenUrl, realm), "swagger-dev"))
+    //                     .tokenRequestEndpoint(
+    //                             new TokenRequestEndpoint(String.format(authUrl, realm), clientId, clientSecret))
+    //                     .build();
+    //     SecurityScheme oauth =
+    //             new OAuthBuilder()
+    //                     .name("spring_oauth")
+    //                     .grantTypes(Arrays.asList(grantType))
+    //                     .build();
+    //     return oauth;
+	// }
 
-	List<SecurityScheme> buildSecurityScheme(){
-		ArrayList<SecurityScheme> lst = new ArrayList<SecurityScheme>();
+	// List<SecurityScheme> buildSecurityScheme(){
+	// 	ArrayList<SecurityScheme> lst = new ArrayList<SecurityScheme>();
 
-		LoginEndpoint login = new LoginEndpointBuilder().url(String.format(authUrl, realm)).build();
-		ArrayList<GrantType> gTypes = new ArrayList<GrantType>();
-		gTypes.add(new ImplicitGrant(login, "access_token"));
-		lst.add(new OAuth("oauth2", Arrays.asList(scopes()), gTypes));
+	// 	LoginEndpoint login = new LoginEndpointBuilder().url(String.format(authUrl, realm)).build();
+	// 	ArrayList<GrantType> gTypes = new ArrayList<GrantType>();
+	// 	gTypes.add(new ImplicitGrant(login, "access_token"));
+	// 	lst.add(new OAuth("oauth2", Arrays.asList(scopes()), gTypes));
 
-		return lst;
-	}
+	// 	return lst;
+	// }
 
-	@Bean
-	SecurityContext securityContext() {
-		final SecurityReference securityReference = SecurityReference.builder().reference("oauth2").scopes(scopes())
-				.build();
-		return SecurityContext.builder().securityReferences(Arrays.asList(securityReference)).build();
-	}
+	// @Bean
+	// SecurityContext securityContext() {
+	// 	final SecurityReference securityReference = SecurityReference.builder().reference("oauth2").scopes(scopes())
+	// 			.build();
+	// 	return SecurityContext.builder().securityReferences(Arrays.asList(securityReference)).build();
+	// }
 
-	private AuthorizationScope[] scopes() {
-		return new AuthorizationScope[] { 
-		};
-	}
+	// private AuthorizationScope[] scopes() {
+	// 	return new AuthorizationScope[] { 
+	// 	};
+	// }
 }

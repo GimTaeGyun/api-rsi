@@ -15,10 +15,11 @@ configurations {
 }
 
 repositories { 
-	maven { 
-		url "http://repo.bflysoft.com:8081/repository/maven-public/"
-		allowInsecureProtocol true
-	}
+	mavenCentral()
+	// maven { 
+	// 	url "http://repo.bflysoft.com:8081/repository/maven-public/"
+	// 	allowInsecureProtocol true
+	// }
 } 
 
 ext {
@@ -46,18 +47,8 @@ dependencies {
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.0'
 
 	// Spring Security
-	implementation 'org.springframework.security:spring-security-config'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-
-
-	// Cloud
-	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
-        exclude group: 'com.sun.jersey'
-        exclude module: 'jsr311-api'
-    }
-	implementation 'org.springframework.cloud:spring-cloud-config-client'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+	// implementation 'org.springframework.security:spring-security-config'
+	// implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// Swagger
 	implementation 'io.swagger:swagger-annotations:1.5.21'
@@ -73,9 +64,6 @@ dependencies {
 	// JDBC
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 
-	// Spring Cloud Bus + RabbitMQ
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
-
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -85,18 +73,6 @@ dependencies {
 	// PostgreSQL
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23' // 추가
     runtimeOnly 'org.postgresql:postgresql' // 추가
-
-	// KeyCloak
-	implementation 'org.keycloak:keycloak-spring-boot-starter:17.0.1'
-	implementation 'org.keycloak:keycloak-spring-security-adapter:11.0.3'
-	implementation 'org.keycloak:keycloak-admin-client:17.0.1'
-
-	// Mail
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-	// Cache
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 }
 
