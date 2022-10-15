@@ -39,7 +39,7 @@ public class PmManagerService extends ProductBaseService{
         }
         
 
-        return new ApiResult<Object>(responseCode, resultArray);
+        return new ApiResult<Object>(responseCode, result);
     }
 
 }

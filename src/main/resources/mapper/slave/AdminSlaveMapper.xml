@@ -12,7 +12,7 @@
 
     <!-- 코인 정보 -->
 	<select id="selectCoin" resultType="hashmap">
-        SELECT * from greedfear_log limit 10
+        SELECT * from upbit_rsi_trade limit 10
 	</select>
 
 </mapper>

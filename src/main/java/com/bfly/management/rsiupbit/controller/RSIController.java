@@ -1,6 +1,7 @@
 package com.bfly.management.rsiupbit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api( tags = "RSI 조회 - RSI 조회")
 // @RequestMapping(value="/manager", produces = { "application/json" })
-@RequestMapping(produces = { "application/json" })
+// @RequestMapping(produces = { "application/json" })
 public class RSIController {
     
     @Autowired
@@ -35,14 +36,16 @@ public class RSIController {
 	 * @throws Exception
 	 */
     @ApiOperation(value = "RSI 조회", notes = "RSI 조회")
+	// @GetMapping("/rsi/inquiry")
 	@PostMapping("/rsi/inquiry")
 	// public ApiResult<?> getRSI(@RequestBody ProductItemReqModel param) throws Exception {
-	public String getRSI(@RequestBody String param) throws Exception {
+	public ApiResult<?> getRSI() throws Exception {
+	// public String getRSI() throws Exception {
 
-		managerService.getProduct();
+		// managerService.getProduct();
 		
-		return "hello";
-		// return managerService.getProduct(param);
+		// return "hello";
+		return managerService.getProduct();
 	}
 
 }
