@@ -16,4 +16,8 @@ public interface AdminSlaveMapper {
     public ArrayList<HashMap> selectCoin();
     // public String selectCoin();
 
+    public ArrayList<HashMap> selectMenuId();
+
+    public ArrayList<HashMap> selectMenuByUpp(@Param("menu_id") Integer menu_id);
+
 }

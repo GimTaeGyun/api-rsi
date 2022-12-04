@@ -15,4 +15,16 @@
         SELECT * from upbit_rsi_trade limit 10
 	</select>
 
+	<!-- 메뉴 정보 -->
+	<select id="selectMenuId" resultType="hashmap">
+		SELECT menu_id, menu_nm from menu
+		where upp_menu
+	</select>
+
+	<!-- 메뉴 정보 -->
+	<select id="selectMenuByUpp" parameterType="Integer" resultType="hashmap">
+		SELECT menu_id, menu_nm from menu
+		where upp_menu_id = #{menu_id}
+	</select>
+
 </mapper>

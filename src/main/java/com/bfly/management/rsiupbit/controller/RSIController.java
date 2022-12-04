@@ -1,5 +1,6 @@
 package com.bfly.management.rsiupbit.controller;
 
+import com.bfly.management.rsiupbit.service.RsiManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,9 @@ public class RSIController {
     @Autowired
     PmManagerService managerService;
 
+	@Autowired
+	RsiManagerService rsiService;
+
     /**
 	 * RSI 조회
 	 * @param request
@@ -39,13 +43,53 @@ public class RSIController {
 	// @GetMapping("/rsi/inquiry")
 	@PostMapping("/rsi/inquiry")
 	// public ApiResult<?> getRSI(@RequestBody ProductItemReqModel param) throws Exception {
-	public ApiResult<?> getRSI() throws Exception {
+	public ApiResult<?> selectRsi() throws Exception {
 	// public String getRSI() throws Exception {
 
 		// managerService.getProduct();
 		
 		// return "hello";
+		return rsiService.selectRsi();
+	}
+
+	/**
+	 * 거래내역 조회
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "거래내역 조회", notes = "거래내역 조회")
+	// @GetMapping("/rsi/inquiry")
+	@PostMapping("/trade/inquiry")
+	// public ApiResult<?> getRSI(@RequestBody ProductItemReqModel param) throws Exception {
+	public ApiResult<?> getProduct() throws Exception {
+		// public String getRSI() throws Exception {
+
+		// managerService.getProduct();
+
+		// return "hello";
 		return managerService.getProduct();
+	}
+
+	/**
+	 * RSI 조회
+	 * @param request
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "RSI 조회", notes = "RSI 조회")
+	// @GetMapping("/rsi/inquiry")
+	@PostMapping("/menu")
+	// public ApiResult<?> getRSI(@RequestBody ProductItemReqModel param) throws Exception {
+	public ApiResult<?> selectMenu() throws Exception {
+		// public String getRSI() throws Exception {
+
+		// managerService.getProduct();
+
+		// return "hello";
+		return managerService.selectMenu();
 	}
 
 }
