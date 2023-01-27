@@ -6,8 +6,10 @@
 <mapper namespace="com.bfly.management.mapper.slave.RsiSlaveMapper">
 
 	<select id="selectRsi" resultType="hashmap">
-		SELECT idx, rsi, price, market, col_date
-		FROM upbit_rsi_perf
+		SELECT idx, rsi, price, market, max(DATE_FORMAT(col_date, '%Y-%m-%d %H:%i:%s')) AS col_date
+		FROM cointrading.upbit_rsi_perf
+		GROUP BY market
+		ORDER BY col_date ASC		
 	</select>
 
 </mapper>
